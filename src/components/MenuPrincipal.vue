@@ -24,7 +24,7 @@
                 Cronograma de trabajos
             </span>
              <router-link class="nav-group-item" to="/clientes">
-                <span class="icon icon-home"></span>
+                <span class="icon icon-user"></span>
                 Clientes
              </router-link>
             <span class="nav-group-item">

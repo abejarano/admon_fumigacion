@@ -17,6 +17,7 @@
     "bootstrap-vue": "^2.0.4",
     "core-js": "^3.3.2",
     "pg": "^7.12.1",
+    "pg-native": "^3.0.0",
     "typeorm": "^0.2.20",
     "vue": "^2.6.10",
     "vue-class-component": "^7.0.2",

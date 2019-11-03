@@ -2,9 +2,10 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import BootstrapVue from 'bootstrap-vue';
-import './assets/css/photon.min.css';
+import './assets/css/photon.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
+
 
 
 Vue.use(BootstrapVue);

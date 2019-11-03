@@ -31,7 +31,7 @@
                     </header>
                     <section class="d-flex justify-content-center h-100">
                         <div class="col-12 p-3">
-                            
+                            <ClientesCrear />
                         </div>
                     </section>
                 </div>  
@@ -44,10 +44,12 @@
 <script>
 import { Vue, Component} from 'vue-property-decorator';
 import MenuPrincipal from '@/components/MenuPrincipal';
+import ClientesCrear from '@/components/clientes/ClientesCrear.vue';
 
 @Component({
     components: {
-        MenuPrincipal
+        MenuPrincipal,
+        ClientesCrear
     }
 })
 export default class Clientes extends Vue{

@@ -1,0 +1,72 @@
+<section>
+    <h2 class="">
+        <span class="icon icon-user-add circle" ></span>
+        Registrar Clientes
+    </h2>
+    <hr>
+    <b-form @submit.prevent="onSubmit" class="mt-5">
+        
+        <section class="d-flex justify-content-center">
+            <b-col cols = "4">
+                <b-form-group label="Tipo de cliente">
+                    <b-form-radio-group id="radio-group-2" name="radio-sub-component">
+                        <b-form-radio value="first">Cliente mensual</b-form-radio>
+                        <b-form-radio value="second">Cliente trimestral</b-form-radio>
+                    </b-form-radio-group>
+                </b-form-group>
+            </b-col>
+        </section>
+        
+        <b-row class="mt-5">
+            <b-col cols = "4">
+                <b-form-group label = "RIF / C.I" label-for="id_rif">
+                    <b-form-input type = "text" placeholder = "Rif / C.I" id = "id_rif"></b-form-input>
+                </b-form-group>
+            </b-col>
+            <b-col cols = "8">
+                <b-form-group label = "Razon social" label-for = "id_razsoc">
+                    <b-input type = "text" id="id_razsoc" placeholder = "Nombre o razon social"></b-input>
+                </b-form-group>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col cols = "4">
+                <b-form-group label = "Teléfono" label-for = "id_telefono">
+                    <b-input tyope = "text" id = "id_telefono"></b-input>
+                </b-form-group>
+            </b-col>
+            <b-col cols = "4">
+                <b-form-group label = "Correo electrónico" label-for = "id_telefono">
+                    <b-input tyope = "text" id = "id_telefono"></b-input>
+                </b-form-group>
+            </b-col>
+        </b-row>
+        <b-row>
+            <b-col cols = "12">
+                <b-form-group label= "Dirección" label-for = "id_direccion">
+                    <b-form-textarea id="id_direccion" rows="3"></b-form-textarea>
+                </b-form-group>
+            </b-col>
+        </b-row>
+        <fieldset>
+            <legend>Datos de contacto</legend>
+            <b-row>
+                <b-col cols = "4">
+                    <b-form-group label = "Nombre completo" label-for = "id_nombre">
+                        <b-input tyope = "text" id = "id_nombre"></b-input>
+                    </b-form-group>
+                </b-col>
+                <b-col cols = "4">
+                    <b-form-group label = "Teléfono" label-for = "id_telefono">
+                        <b-input tyope = "text" id = "id_telefono"></b-input>
+                    </b-form-group>
+                </b-col>
+                <b-col cols = "4">
+                    <b-form-group label = "Correo electrónico" label-for = "id_telefono">
+                        <b-input tyope = "text" id = "id_telefono"></b-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+        </fieldset>
+    </b-form>
+</section>
