@@ -1,19 +1,21 @@
 <template>
   <div id="app">
-    
-    <router-view />
+    <component :is="layout"></component>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator';
-import ipRenderer from 'electron';
-
+import LayoutHome from '@/layouts/LayoutHome';
+import LayoutDashboard from '@/layouts/LayoutDashboard';
+import { mapState } from 'vuex';
 
 @Component({
   components: {
-    
+    LayoutHome,
+    LayoutDashboard
   },
+  computed: mapState(['layout']),
 })
 export default class App extends Vue {
 }
