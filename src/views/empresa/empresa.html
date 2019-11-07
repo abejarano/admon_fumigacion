@@ -1,0 +1,72 @@
+<section>
+    <header class="toolbar toolbar-header">
+        <div class="toolbar-actions">
+            <div class="btn-group">
+                <button class="btn btn-default">
+                    <span class="icon icon-floppy pr-4"></span>
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </header>
+    <br>
+    <h3>Configuración de empresa</h3>
+    <hr>
+    <br>
+    
+    <b-form @submit.prevent="onSubmit" class="mt-5">
+        <b-card no-body>
+            <b-tabs card>
+                <b-tab title="Configuración general" active>
+                    <b-card-text>
+                        <b-row>
+                            <b-col cols = "2">
+                                <b-form-group label="Rif" label-for = "id_rif">
+                                    <b-input id="id_rif"></b-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col cols = "5">
+                                <b-form-group label="Razon social" label-for = "id_razsoc">
+                                    <b-input id="id_razsoc"></b-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col cols="12">
+                                <b-form-group label= "Dirección" label-for = "id_direccion">
+                                    <b-form-textarea id="id_direccion" rows="3"></b-form-textarea>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col cols="12">
+
+                            </b-col>
+                        </b-row>
+                    </b-card-text>
+                </b-tab>
+                <b-tab title="Configuración administrativa">
+                    <b-card-text>
+                        <b-row>
+                            <b-col cols = "2">
+                                <b-form-group label = "Porcentaje de I.V.A" label-for="id_iva">
+                                    <b-input type = "text" id="id_iva"></b-input>
+                                </b-form-group>
+                            </b-col>
+                        </b-row>
+                        <b-row>
+                            <b-col cols = "3">
+                                <b-form-group label = "Correlativo de Facturas" label-for="id_correlativo_factura">
+                                    <b-input type = "text" id="id_correlativo_factura"></b-input>
+                                </b-form-group>
+                            </b-col>
+                            <b-col cols = "3">
+                                <b-form-group label = "Correlativo de presupuestos" label-for="id_correlativo_presupuestos">
+                                    <b-input type = "text" id="id_correlativo_presupuestos"></b-input>
+                                </b-form-group>
+                            </b-col> 
+                        </b-row>
+                    </b-card-text>
+                </b-tab>
+            </b-tabs>
+        </b-card>
+    </b-form>
+</section>

@@ -10,10 +10,10 @@
                 <span class="icon icon-home"></span>
                 Escritorio
             </router-link>
-            <a class="nav-group-item">
+            <router-link class="nav-group-item" to="/empresa">
                 <span class="icon icon-doc-landscape"></span>
                 Empresa
-            </a>
+            </router-link>
             <span class="nav-group-item">
                 <span class="icon icon-tools"></span>
                 Servicios

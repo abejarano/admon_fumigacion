@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import InicioSesion from '@/components/InicioSesion.vue';
+import Empresa from '@/views/empresa/Empresa.vue';
 
 Vue.use(VueRouter);
 
@@ -19,6 +20,16 @@ const routes = [
     path: '/clientes',
     name: 'clientes',
     component: () => import('../views/Clientes.vue'),
+  },
+  {
+    path: '/clientes/crear',
+    name: 'clientes-crear',
+    component: () => import('../views/Clientes.vue'),
+  },
+  {
+    path: '/empresa',
+    name: 'empresa',
+    component: Empresa
   },
   {
     path: '*',
