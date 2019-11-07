@@ -14,10 +14,10 @@
                 <span class="icon icon-doc-landscape"></span>
                 Empresa
             </router-link>
-            <span class="nav-group-item">
+            <router-link class="nav-group-item" to="/Servicios">
                 <span class="icon icon-tools"></span>
                 Servicios
-            </span>
+            </router-link>
             <h5 class="nav-group-title">Operaciones</h5>
             <span class="nav-group-item">
                 <span class="icon icon-clock"></span>
