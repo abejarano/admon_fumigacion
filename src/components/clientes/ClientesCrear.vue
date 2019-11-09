@@ -6,7 +6,7 @@ import { Vue, Component } from 'vue-property-decorator';
     name: 'ClientesCrear'
 })
 export default class ClientesCrear extends Vue {
-    onSubmit() {
+    public onSubmit() {
 
     }
 }

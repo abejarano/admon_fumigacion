@@ -16,7 +16,7 @@ import { Vue, Component } from 'vue-property-decorator';
 export default class ServicioListado extends Vue {
     public items: any = [];
 
-    created() {
+    public created() {
         this.items = [
             { age: 40, first_name: 'Dickerson', last_name: 'Macdonald' },
             { age: 21, first_name: 'Larsen', last_name: 'Shaw' },

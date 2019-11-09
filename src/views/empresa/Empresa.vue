@@ -7,12 +7,10 @@ import { Vue, Component } from 'vue-property-decorator';
     name: 'Empresa',
 })
 export default class Empresa extends Vue {
-    created() {
+    public created() {
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
     }
     public onSubmit() {
-
     }
-    
 }
 </script>

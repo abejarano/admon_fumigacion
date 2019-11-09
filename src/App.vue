@@ -13,7 +13,7 @@ import { mapState } from 'vuex';
 @Component({
   components: {
     LayoutHome,
-    LayoutDashboard
+    LayoutDashboard,
   },
   computed: mapState(['layout']),
 })

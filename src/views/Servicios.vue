@@ -30,7 +30,7 @@
     <section class="d-flex justify-content-center h-100">
         <div class="col-12 p-3">
             <ServiciosListado v-if="listado" />
-            <ServiciosCrear :accion="tipo_accion" v-if = "!listado" />
+            <ServiciosCrear :accion="tipoAccion" v-if = "!listado" />
         </div>
     </section>
 </section>
@@ -45,14 +45,14 @@ import ServiciosCrear from '@/components/servicios/ServiciosCrear.vue';
     components: {
         ServiciosListado,
         ServiciosCrear,
-    }
+    },
 })
 export default class Servicios extends Vue {
     public crear: boolean = true;
     public listado: boolean = true;
-    public tipo_accion: string = 'Crear';
+    public tipoAccion: string = 'Crear';
 
-    created() {
+    public created() {
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
     }
 

@@ -29,20 +29,24 @@
 </template>
 <script lang='ts'>
 import { Vue, Component } from 'vue-property-decorator';
+import DB from '@/backend/db';
 
 @Component({
-    name: 'InicioSesion'
+    name: 'InicioSesion',
 })
 export default class InicioSesion extends Vue {
-    created() {
+    public created() {
         this.$store.commit('SET_LAYOUT',  'layout-home');
+        DB.where({
+            usuario: 'abejarano',
+            clave: '130202',
+        }).orWhere('0', 's');
     }
-   onSubmit() {
-       this.$router.push('/dashboard') 
-       console.log('ss');
+   public onSubmit() {
+       this.$router.push('/dashboard');
    }
 
-   onReset() {
+   public onReset() {
 
    }
 }

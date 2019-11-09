@@ -8,8 +8,8 @@ import { Vue, Component } from 'vue-property-decorator';
 @Component({
 })
 export default class Dashboard extends Vue {
-    
-    created() {
+
+    public created() {
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
     }
 }

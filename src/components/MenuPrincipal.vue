@@ -50,6 +50,6 @@ import { Vue, Component } from 'vue-property-decorator';
     name: 'MenuPrincipal'
 })
 export default class MenuPrincipal extends Vue {
-    
+
 }
 </script>
