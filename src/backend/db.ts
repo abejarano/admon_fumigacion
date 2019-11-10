@@ -1,5 +1,3 @@
-const { Pool } = require('pg');
-import { postgresql } from './pg.config';
 import mysql from 'mysql';
 
 class Conexion {

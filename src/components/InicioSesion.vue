@@ -39,6 +39,7 @@ import Tools from '@/backend/tools';
 })
 export default class InicioSesion extends Vue {
     public form: any = [];
+    private tools = new Tools();
 
     public created() {
         this.$store.commit('SET_LAYOUT',  'layout-home');
@@ -54,15 +55,17 @@ export default class InicioSesion extends Vue {
             const data = await DB.select('usuarios')
                             .where({usuario: this.form.usuario})
                             .exec();
-            console.log(data.clave);
+            
             if (data.rowCount === 0) {
                 alert('Usuario ingresado no esta registrado en el sistema');
                 return;
             }
-            if (data.clave !== Tools.makePassword(this.form.clave)){
+            
+            if (!await this.tools.comparePassword(this.form.clave, data.clave)) {
                 alert('La clave ingresada es incorrecta');
                 return;
             }
+            
             this.$router.push('/dashboard');
         })();
 
