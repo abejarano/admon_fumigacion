@@ -11,19 +11,6 @@
                     <span class="icon icon-menu pr-4"></span>
                     Listado
                 </button>
-                <button class="btn btn-default">
-                    <span class="icon icon-floppy pr-4"></span>
-                    Guardar
-                </button>
-                <button class="btn btn-default">
-                    <span class="icon icon-trash pr-4"></span>
-                    Eliminar
-                </button>
-                <button class="btn btn-default">
-                    <span class="icon icon-search"></span>
-                    Filtrar
-                </button>
-                
             </div>
         </div>
     </header>
@@ -36,7 +23,7 @@
 </section>
 </template>
 <script lang = "ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, ProvideReactive } from 'vue-property-decorator';
 import ServiciosListado from '@/components/servicios/ServiciosListado.vue';
 import ServiciosCrear from '@/components/servicios/ServiciosCrear.vue';
 
@@ -61,6 +48,7 @@ export default class Servicios extends Vue {
     }
     public nuevo() {
         this.listado = false;
+        
     }
 }
 </script>

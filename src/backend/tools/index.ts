@@ -1,6 +1,27 @@
 import bcrypt from 'bcrypt';
+import { resolve } from 'dns';
+// tslint:disable-next-line:no-var-requires
+const { dialog } = require('electron').remote;
 
 export default class Tools {
+    public showMessageQuestion(question: any): Promise<any> {
+        const options = {
+            type: 'question',
+            buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+            defaultId: 2,
+            title: 'Question',
+            message: question.message,
+            detail: question.detail,
+            checkboxChecked: false,
+        };
+        return new Promise ( (resolve, reject) => {
+            dialog.showMessageBox(null, options, (response: any) => {
+                resolve(response);
+            });
+        });
+
+    }
+
     public static makePassword(pass: string) {
         return  bcrypt.hash(pass, 10);
     }
@@ -17,6 +38,5 @@ export default class Tools {
     public async comparePassword(pass: string, hash: string): Promise<boolean> {
         return await bcrypt.compare(pass, hash);
     }
-
 
 }

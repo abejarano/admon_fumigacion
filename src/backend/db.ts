@@ -3,7 +3,7 @@ import mysql from 'mysql';
 class Conexion {
     private conex: any;
     private sqlWh: string = '';
-    private sqlSelect: string = 'SELECT * ';
+    private sql: string = 'SELECT * ';
     private inner: string = '';
     private whereValue: any[] = [];
     private typeSQL: string = 'SELECT';
@@ -58,27 +58,46 @@ class Conexion {
 
     public select(table: string, fields: any = '') {
         if (fields.length > 0) {
-            this.sqlSelect = 'SELECT ' + fields + ' FROM ' + table;
+            this.sql = 'SELECT ' + fields + ' FROM ' + table;
         } else {
-            this.sqlSelect += 'FROM ' + table;
+            this.sql += 'FROM ' + table;
         }
 
         return this;
     }
+    public insert(table: string, values: any) {
+        this.sql = 'INSERT ' + table + ' SET ? ';
+        let value = 'VALUE (';
+        let indx = 0;
+        this.typeSQL = 'INSERT';
 
+        this.whereValue = values;
+        /*for (const key in values) {
+            if ( Object.keys(values).length - 1 === indx) {
+                query += key + ')';
+                value += '?)';
+            } else {
+                query += key + ',';
+                value += '?,';
+            }
+            this.whereValue.push(values[key]);
+            indx++;
+        }
+        this.sql = query + value;*/
+        return this;
+    }
     public async exec(): Promise <any> {
-        const query = this.sqlSelect + this.inner + this.sqlWh;
+        const query = this.sql + this.inner + this.sqlWh;
         let condition: any = [];
+        if ( Object.keys(this.whereValue).length > 0 ) {
+            condition = this.whereValue;
+        }
+        this.clearVar();
         return new Promise( ( resolve, reject ) => {
             switch (this.typeSQL) {
                 case 'SELECT':
 
-                    if ( Object.keys(this.whereValue).length > 0 ) {
-                        condition = this.whereValue;
-                    }
-
-                    this.clearVar();
-                    const data = this.conex.query(query, condition, (error: any, results: any, fields: any) => {
+                    this.conex.query(query, condition, (error: any, results: any, fields: any) => {
                         if (Object.keys(results[0]).length === 1 ) {
                             resolve(results[0]);
                         } else if (Object.keys(results[0]).length > 1 ) {
@@ -90,49 +109,20 @@ class Conexion {
                         }
                     });
                     break;
-
+                case 'INSERT':
+                    this.conex.query(query, condition, (error: any, results: any) => {
+                        if (error) {
+                            reject(error);
+                            return;
+                        }
+                        resolve(results.insertId);
+                    });
                 default:
                     return false;
                     break;
             }
         });
 
-
-        switch (this.typeSQL) {
-            case 'SELECT':
-
-                if ( Object.keys(this.whereValue).length > 0 ) {
-                    condition = this.whereValue;
-                }
-
-                this.clearVar();
-                const data = this.conex.query(query, condition, (error: any, results: any, fields: any) => {
-                    console.log(results);
-                });
-
-                return data;
-                /*const data = await client.query(query);
-                client.release();
-                client.end();
-                if (data.rowCount === 0) {
-                    return {
-                        rowCount: 0,
-                    };
-                } else {
-                    if (data.rowCount === 1) {
-                        return data.rows[0];
-                    } else {
-                        return data.rows;
-                    }
-
-                }*/
-
-                break;
-
-            default:
-                return false;
-                break;
-        }
     }
 
     private clearVar() {
