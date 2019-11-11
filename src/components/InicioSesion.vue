@@ -48,26 +48,24 @@ export default class InicioSesion extends Vue {
             clave: '',
         };    
     }
-    public onSubmit() {
+    public async onSubmit() {
+            
+        const data = await DB.select('usuarios')
+                        .where({usuario: this.form.usuario})
+                        .exec();
         
-        (async () => {
-            
-            const data = await DB.select('usuarios')
-                            .where({usuario: this.form.usuario})
-                            .exec();
-            
-            if (data.rowCount === 0) {
-                alert('Usuario ingresado no esta registrado en el sistema');
-                return;
-            }
-            
-            if (!await this.tools.comparePassword(this.form.clave, data.clave)) {
-                alert('La clave ingresada es incorrecta');
-                return;
-            }
-            
-            this.$router.push('/dashboard');
-        })();
+        if (data.rowCount === 0) {
+            alert('Usuario ingresado no esta registrado en el sistema');
+            return;
+        }
+        
+        if (!await this.tools.comparePassword(this.form.clave, data.clave)) {
+            alert('La clave ingresada es incorrecta');
+            return;
+        }
+        
+        this.$router.push('/dashboard');
+        
 
    }
 
