@@ -126,7 +126,7 @@ class Conexion {
     }
 
     private clearVar() {
-        this.sqlSelect = 'SELECT * ';
+        this.sql = 'SELECT * ';
         this.sqlWh = '';
     }
 }

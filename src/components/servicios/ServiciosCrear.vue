@@ -21,7 +21,7 @@
                 <b-row>
                     <b-col cols = "3">
                         <b-form-group label="Precio del servicio" label-for="id_precio">
-                            <b-input type="number" required = "required" value="0" v-model = "form.monto"></b-input>
+                            <b-input type="number" required = "required" v-model = "form.monto"></b-input>
                         </b-form-group>
                     </b-col>
                     <b-col cols="3">
@@ -85,12 +85,11 @@ export default class ServicosCrear extends Vue {
         
         
     }
-
+    
     public resetForm() {
         Object.keys(this.form).forEach( (key,index) => {
             this.form[key] = '';
         });
-        this.$refs.codigo.focus();
         
     }
 }

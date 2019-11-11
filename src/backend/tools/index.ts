@@ -1,9 +1,13 @@
 import bcrypt from 'bcrypt';
 import { resolve } from 'dns';
 // tslint:disable-next-line:no-var-requires
-const { dialog } = require('electron').remote;
+const { dialog, BrowserWindow } = require('electron').remote;
 
 export default class Tools {
+
+    public static makePassword(pass: string) {
+        return  bcrypt.hash(pass, 10);
+    }
     public showMessageQuestion(question: any): Promise<any> {
         const options = {
             type: 'question',
@@ -14,16 +18,9 @@ export default class Tools {
             detail: question.detail,
             checkboxChecked: false,
         };
-        return new Promise ( (resolve, reject) => {
-            dialog.showMessageBox(null, options, (response: any) => {
-                resolve(response);
-            });
-        });
+        const win = new BrowserWindow();
+        return dialog.showMessageBox(win, options);
 
-    }
-
-    public static makePassword(pass: string) {
-        return  bcrypt.hash(pass, 10);
     }
 
     public async getRandom(length: number): Promise<string> {
