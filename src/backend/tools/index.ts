@@ -18,8 +18,8 @@ export default class Tools {
             detail: question.detail,
             checkboxChecked: false,
         };
-        const win = new BrowserWindow();
-        return dialog.showMessageBox(win, options);
+
+        return dialog.showMessageBox(null, options);
 
     }
 
