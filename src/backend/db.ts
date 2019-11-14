@@ -72,18 +72,6 @@ class Conexion {
         this.typeSQL = 'INSERT';
 
         this.whereValue = values;
-        /*for (const key in values) {
-            if ( Object.keys(values).length - 1 === indx) {
-                query += key + ')';
-                value += '?)';
-            } else {
-                query += key + ',';
-                value += '?,';
-            }
-            this.whereValue.push(values[key]);
-            indx++;
-        }
-        this.sql = query + value;*/
         return this;
     }
     public async exec(): Promise <any> {
@@ -98,10 +86,11 @@ class Conexion {
                 case 'SELECT':
 
                     this.conex.query(query, condition, (error: any, results: any, fields: any) => {
-                        if (Object.keys(results[0]).length === 1 ) {
+
+                        if (Object.keys(results).length === 1 ) {
                             resolve(results[0]);
                         } else if (Object.keys(results[0]).length > 1 ) {
-                            resolve(results[0]);
+                            resolve(results);
                         } else {
                             resolve({
                                 rowCount: 0,

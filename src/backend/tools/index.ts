@@ -1,5 +1,5 @@
 import bcrypt from 'bcrypt';
-import { resolve } from 'dns';
+
 // tslint:disable-next-line:no-var-requires
 const { dialog, BrowserWindow } = require('electron').remote;
 
