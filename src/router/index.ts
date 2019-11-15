@@ -2,7 +2,6 @@ import Vue from 'vue';
 import VueRouter from 'vue-router';
 import InicioSesion from '@/components/InicioSesion.vue';
 import Empresa from '@/views/empresa/Empresa.vue';
-import Servicios from '@/views/Servicios.vue';
 
 
 Vue.use(VueRouter);
@@ -36,7 +35,17 @@ const routes = [
   {
     path: '/servicios',
     name: 'servicios',
-    component: Servicios,
+    component: () => import('../components/servicios/ServiciosListado.vue'),
+  },
+  {
+    path: '/servicios/:action',
+    name: 'servicios_crear',
+    component: () => import('../components/servicios/ServiciosCrear.vue'),
+  },
+  {
+    path: '/servicios/:action/:id',
+    name: 'servicios_editar',
+    component: () => import('../components/servicios/ServiciosCrear.vue'),
   },
   {
     path: '*',

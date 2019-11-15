@@ -33,6 +33,13 @@ export default class App extends Vue {
   .router-link-active{
         background-color: #dcdfe1;
   }
+  .toolbar-header {
+    border: 1px solid #c2c0c2 !important;
+}
+.toolbar-header .btn-default {
+border-color: #c2c0c2 #c2c0c2 #a19fa1;
+}
+    
   fieldset {
     padding: 6px 10px !important;
     border:1px solid #fd945a !important;
@@ -43,14 +50,9 @@ export default class App extends Vue {
     padding-left: 10px !important;
     padding-right: 10px !important;
   }
-  input {
-    text-transform: uppercase;
-  }
+  
   th {
     font-size: 8pt; font-weight: bold !important;
-  }
-  tr {
-    text-transform: uppercase;
   }
   .circle {
     

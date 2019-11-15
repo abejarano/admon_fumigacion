@@ -18,8 +18,11 @@ export default class Tools {
             detail: question.detail,
             checkboxChecked: false,
         };
-
-        return dialog.showMessageBox(null, options);
+        return new Promise( (resolve: any, reject: any) => {
+            dialog.showMessageBox(null, options,(response: any) => {
+                resolve(response);
+            });
+        });
 
     }
 

@@ -6,7 +6,9 @@
                 <div class="pane">
                     <section class="d-flex justify-content-center h-100">
                         <div class="col-12 p-3">
-                            <router-view/>
+                            
+                            <router-view />
+                            
                         </div>
                     </section>
                 </div>  

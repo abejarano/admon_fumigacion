@@ -14,7 +14,7 @@
                 <span class="icon icon-doc-landscape"></span>
                 Empresa
             </router-link>
-            <router-link class="nav-group-item" to="/Servicios">
+            <router-link class="nav-group-item" to="/servicios">
                 <span class="icon icon-tools"></span>
                 Servicios
             </router-link>

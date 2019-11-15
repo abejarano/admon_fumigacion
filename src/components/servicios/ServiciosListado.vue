@@ -16,13 +16,15 @@ Vue.filter("formatNumber", (value: any) => {
 export default class ServicioListado extends GenericTabble {
     public data: any = [];
     private fields: any = [];
+    private filter: string = '';
     private loadTable: boolean = true;
     private currentPage: number = 1;
     private totalRows: number = 1;
-    private perPage: number = 40;   
+    private perPage: number = 14;   
     private checkAll: boolean = false;
     
     public async created() {
+        this.$store.commit('SET_LAYOUT',  'layout-dashboard');
         this.fields = [{
             label: '',
             key: 'check'
@@ -40,6 +42,9 @@ export default class ServicioListado extends GenericTabble {
         }, {
             label: 'ESTATUS',
             key: 'estatus'
+        },{
+            label: '',
+            key: 'button',
         }];
         
         this.loadData(this.currentPage);
@@ -57,6 +62,17 @@ export default class ServicioListado extends GenericTabble {
         this.setData(this.data);
         
     }
+
+    async editar(codigo: string) {
+        this.$router.push('/servicios/actualizar/' + codigo);
+        
+    }
+
+    onFiltered(filteredItems: any) {
+        // Trigger pagination to update the number of buttons/pages due to filtering
+        this.totalRows = filteredItems.length
+        this.currentPage = 1
+      }
     
 }
 </script>

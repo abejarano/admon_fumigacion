@@ -1,13 +1,26 @@
 <template>
     <section>
-        <h3>{{ accion }} servicios</h3>
+        <header class="toolbar toolbar-header">
+            <div class="toolbar-actions">
+                <div class="btn-group">
+                    <router-link class="btn btn-default" to="/servicios/crear">
+                        <span class="icon icon-doc pr-4"></span>
+                        Nuevo
+                    </router-link>
+                    <router-link class="btn btn-default" to="/servicios">
+                        <span class="icon icon-menu pr-4"></span>
+                        Listado
+                    </router-link>
+                </div>
+            </div>
+        </header>
+        <h3 class="mt-3">{{ accion }} servicios</h3>
         <hr>
-        <br>
         <b-form @submit.prevent="onSubmit" id="form" class="mt-5">
             <b-row>
                 <b-col cols = "2">
                     <b-form-group label="Código" label-for = "id_servicio">
-                        <b-input ref = "codigo" v-mask="'sv####'"  type="text" id = "id_servicio" required = "required" maxlength = "6" autofocus v-model="form.codigo"></b-input>
+                        <b-input ref = "codigo"  v-mask="'sv####'"  type="text" id = "id_servicio" required = "required" maxlength = "6" autofocus v-model="form.codigo"></b-input>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -21,7 +34,7 @@
             <b-row>
                 <b-col cols = "3">
                     <b-form-group label="Precio del servicio" label-for="id_precio">
-                        <b-input type="text" v-mask = "'###.###.###,##'" required = "required" v-model = "form.monto"></b-input>
+                        <b-input type="text" required = "required" v-model = "form.monto"></b-input>
                     </b-form-group>
                 </b-col>
                 <b-col cols="3">
@@ -36,9 +49,9 @@
             <br>    
             <hr>
             <div class="text-center mt-5">
-                <b-button type="submit" variant="success" size="lg">Guardar</b-button>
-                <b-button type="submit" variant="info" class="ml-2" size="lg">Guardar y añadir otro</b-button>
-                <b-button type="submit" class="ml-2"  v-on:click = "resetForm" size="lg">Limpiar</b-button>
+                <b-button variant="success" size="lg" v-on:click = "onSubmit('l')">Guardar</b-button>
+                <b-button variant="info" class="ml-2" size="lg" v-on:click = "onSubmit('s')">Guardar y añadir otro</b-button>
+                <b-button class="ml-2"  v-on:click = "resetForm" size="lg">Limpiar</b-button>
             </div>
                 
         </b-form>
@@ -53,43 +66,67 @@ import DB from '@/backend/db';
     name: 'ServicosCrear'
 })
 export default class ServicosCrear extends Vue {
-    @Prop() private accion!: string;
-    public form: any = [];
-    private tools = new Tools();
-
-    public created() {
-
-        this.form = {
+    private is_update: boolean = false;
+    private accion: string = 'Crear';
+    public form: any = {
             codigo : '',
             descripcion: '',
             monto: '',
             estatus: 'A'
         };
-    }
+    private tools = new Tools();
+    private searchCode: string = '';
 
-    public async onSubmit() {
+    public created() {
+        this.$store.commit('SET_LAYOUT',  'layout-dashboard');
+        if (this.$route.params.action === 'crear') {
+            this.is_update = false;
+        } else {
+            this.is_update = true;
+            this.searchData();
+        }
+        
+        
+    }
+    public async onSubmit(onAction: any) {
         
         const resp = await this.tools.showMessageQuestion({
-            message: '¿Desea guardar el servicio?',
+            message: '¿Desea '+this.$route.params.action+' el servicio?',
             detail: 'Se registrará una nuevo servicio en la base de datos'
         });
-
-        if (!resp) {
+        
+        if (resp === 2 || resp === 0) {
             return;
         }
         try {
-            const i = await DB.insert('servicios', this.form).exec();
-            this.resetForm();
+            if (!this.is_update) {
+                await DB.insert('servicios', this.form).exec();
+                
+            } else {
+                await DB.update('servicios', this.form).where({codigo: this.$route.params.id}).exec();
+            }
+            
+            if (onAction === 'l') {
+                this.$router.push('/servicios');
+            }
+            
         } catch(err) {
             alert(err.message);
         }
         
         
     }
-    
+
     public resetForm() {
         Object.keys(this.form).forEach( (key,index) => {
             this.form[key] = '';
+        });
+        
+    }
+
+    private async searchData() {
+        DB.select('servicios').where({codigo: this.$route.params.id}).exec().then( data => {
+            this.form = data;
         });
         
     }

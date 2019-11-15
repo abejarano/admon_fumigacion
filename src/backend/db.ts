@@ -45,6 +45,7 @@ class Conexion {
             indx = indx + 1;
 
         }
+        
         return this;
     }
 
@@ -65,13 +66,30 @@ class Conexion {
         } else {
             this.sql += 'SELECT * FROM ' + table;
         }
+        return this;
+    }
+    public update(table: string, values: any) {
+        this.sql = 'UPDATE ' + table + ' SET ';
+        this.typeSQL = 'UPDATE';
+        let indx = 0;
+        // tslint:disable-next-line:forin
+        for (const key in values) {
+            if (key !== 'id') {
+                if (Object.keys(values).length - 1 === indx) {
+                    this.sql += key + ' = ? ';
+                } else {
+                    this.sql += key + ' = ?, ';
+                }
 
+                this.whereValue.push(values[key]);
+            }
+
+            indx++;
+        }
         return this;
     }
     public insert(table: string, values: any) {
         this.sql = 'INSERT ' + table + ' SET ? ';
-        let value = 'VALUE (';
-        let indx = 0;
         this.typeSQL = 'INSERT';
 
         this.whereValue = values;
@@ -98,12 +116,14 @@ class Conexion {
         if ( Object.keys(this.whereValue).length > 0 ) {
             condition = this.whereValue;
         }
-        this.clearVar();
         return new Promise( ( resolve, reject ) => {
             switch (this.typeSQL) {
                 case 'SELECT':
-                    console.log(query);
                     this.conex.query(query, condition, (error: any, results: any, fields: any) => {
+                        if (error) {
+                            reject(error);
+                        }
+                        this.clearVar();
 
                         if (Object.keys(results).length === 1 ) {
                             resolve(results[0]);
@@ -116,17 +136,22 @@ class Conexion {
                         }
                     });
                     break;
-                case 'INSERT':
+                default:
                     this.conex.query(query, condition, (error: any, results: any) => {
                         if (error) {
                             reject(error);
                             return;
                         }
-                        resolve(results.insertId);
+
+                        if (this.typeSQL === 'INSERT') {
+                            this.clearVar();
+                            resolve(results.insertId);
+                        } else if (this.typeSQL === 'UPDATE') {
+                            this.clearVar();
+                            resolve(results.affectedRows);
+                        }
+
                     });
-                default:
-                    return false;
-                    break;
             }
         });
 
@@ -136,10 +161,11 @@ class Conexion {
         const perPage = rowsPag;
         const offset = (page - 1) * perPage;
         const rs = await this.raw('select count(id) as total from ' + this.table);
+
         const totalRows = rs.total;
         const totalPages = Math.ceil(totalRows / perPage);
 
-        const SQL = this.sql + this.inner + this.sqlWh + ' LIMIT ' + offset +',' + perPage;
+        const SQL = this.sql + this.inner + this.sqlWh + ' LIMIT ' + offset + ',' + perPage;
         const data = await this.raw(SQL);
 
         return {
@@ -150,8 +176,14 @@ class Conexion {
     }
 
     private clearVar() {
-        this.sql = 'SELECT * ';
+        this.sql = '';
         this.sqlWh = '';
+        this.typeSQL = 'SELECT';
+        this.inner = '';
+        while (this.whereValue.length > 0) {
+            this.whereValue.pop();
+        }
+        this.whereValue = [];
     }
 }
 
