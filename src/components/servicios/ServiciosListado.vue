@@ -1,67 +1,28 @@
-<template>
-    <section>
-        <h3 class="mt-2">Listado de servicios</h3>
-        <hr>
-        <br>
-        <div class="overflow-auto">
-            <div class="mt-6">
-                <b-pagination align="center" @input="cargarDatos(currentPage)"
-                    v-model="currentPage"
-                    pills
-                    :total-rows="totalRows"
-                    :per-page="perPage"
-                ></b-pagination>
-            </div>
-        </div>
-
-        <b-table id="my-table" striped hover :busy="loadTable" :items="items" :fields="fields">
-            <template v-slot:table-busy>
-                <div class="text-center text-danger my-2">
-                    <b-spinner class="align-middle"></b-spinner>
-                    <br>
-                    <strong>Cargando datos ...</strong>
-                </div>
-            </template>
-            <template v-slot:head(check)="data">
-                <div class="text-center">
-                    <b-form-checkbox v-on:click="selectAll"></b-form-checkbox>
-                </div>
-            </template>
-            <template v-slot:cell(check) = "data">
-                <div class="text-center">
-                    <b-form-checkbox :value="data.item.id" v-model="check"></b-form-checkbox>
-                </div>
-            </template>
-            <template v-slot:cell(monto)="data">
-                {{ data.item.monto | formatNumber}}
-            </template>
-        </b-table>
-    </section>
-</template>
+<template src = './ServicioListado.html'></template>
 
 <script lang = "ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import DB from '@/backend/db';
+import GenericTabble from '@/components/GenericTable.vue';
 const numeral = require('numeral');
 
 Vue.filter("formatNumber", (value: any) => {
-    return numeral(value).format("0,000.00"); // displaying other groupings/separators is possible, look at the docs
+    return numeral(value).format("0,000.00");
 });
 
 @Component({
     name: 'ServicioListado'
 })
-export default class ServicioListado extends Vue {
-    public items: any = [];
+export default class ServicioListado extends GenericTabble {
+    public data: any = [];
     private fields: any = [];
     private loadTable: boolean = true;
-    private check: any;
     private currentPage: number = 1;
-    private totalRows: number = 120;
-    private perPage: number = 40;
-
+    private totalRows: number = 1;
+    private perPage: number = 40;   
+    private checkAll: boolean = false;
+    
     public async created() {
-        this.check = [];
         this.fields = [{
             label: '',
             key: 'check'
@@ -80,19 +41,22 @@ export default class ServicioListado extends Vue {
             label: 'ESTATUS',
             key: 'estatus'
         }];
-
-        this.items =  await DB.select('servicios').exec();
-        this.loadTable = false;
+        
+        this.loadData(this.currentPage);
         
     }
 
-    cargarDatos(pageNum: any) {
-        console.log(pageNum);
-      return pageNum
+    async loadData(pageNum: any) {
+        this.loadTable = true;
+        this.currentPage= pageNum;
+        const paginate =  await DB.select('servicios').paginate(this.currentPage, this.perPage);
+        this.data = paginate.paginate_data;
+        this.totalRows = paginate.paginate_totalRows;
+        
+        this.loadTable = false;
+        this.setData(this.data);
+        
     }
     
-    get selectAll () {
-        return true;
-    }
 }
 </script>

@@ -1,0 +1,45 @@
+<section>
+    <h3 class="mt-2">Listado de servicios</h3>
+    <hr>
+    <br>
+    <div class="overflow-auto">
+        <div class="mt-6">
+            <b-pagination align="center" @input="loadData(currentPage)"
+                v-model="currentPage"
+                pills
+                :total-rows="totalRows"
+                :per-page="perPage"
+            ></b-pagination>
+        </div>
+    </div>
+
+    <b-table id="my-table" striped hover :busy="loadTable" :items="data" :fields="fields">
+        <template v-slot:table-busy>
+            <div class="text-center text-danger my-2">
+                <b-spinner class="align-middle"></b-spinner>
+                <br>
+                <strong>Cargando datos ...</strong>
+            </div>
+        </template>
+        <template v-slot:head(check)="data">
+            <div class="text-center">
+                <b-form-checkbox @change="selectAll"></b-form-checkbox>
+            </div>
+        </template>
+        <template v-slot:cell(check) = "data">
+            <div class="text-center">
+                <b-form-checkbox :value="data.item.id" v-model="check" @change="select(data.item.id)"></b-form-checkbox>
+            </div>
+        </template>
+        <template v-slot:cell(monto)="data">
+            {{ data.item.monto | formatNumber}}
+        </template>
+        <template v-slot:cell(estatus)="data">
+            <div class="text-center">
+                <strong v-if = "data.item.estatus == 'A'">Activo</strong>
+                <strong v-if = "data.item.estatus == 'I'">Inactivo</strong>
+            </div>
+            
+        </template>
+    </b-table>
+</section>

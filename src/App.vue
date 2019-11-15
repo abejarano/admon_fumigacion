@@ -43,6 +43,15 @@ export default class App extends Vue {
     padding-left: 10px !important;
     padding-right: 10px !important;
   }
+  input {
+    text-transform: uppercase;
+  }
+  th {
+    font-size: 8pt; font-weight: bold !important;
+  }
+  tr {
+    text-transform: uppercase;
+  }
   .circle {
     
     background: #fd945a;

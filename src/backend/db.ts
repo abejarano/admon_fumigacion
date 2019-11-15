@@ -3,10 +3,11 @@ import mysql from 'mysql';
 class Conexion {
     private conex: any;
     private sqlWh: string = '';
-    private sql: string = 'SELECT * ';
+    private sql: string = '';
     private inner: string = '';
     private whereValue: any[] = [];
     private typeSQL: string = 'SELECT';
+    private table: string = '';
 
 
     public constructor() {
@@ -57,10 +58,12 @@ class Conexion {
     }
 
     public select(table: string, fields: any = '') {
+        this.sql = '';
+        this.table = table;
         if (fields.length > 0) {
             this.sql = 'SELECT ' + fields + ' FROM ' + table;
         } else {
-            this.sql += 'FROM ' + table;
+            this.sql += 'SELECT * FROM ' + table;
         }
 
         return this;
@@ -74,6 +77,21 @@ class Conexion {
         this.whereValue = values;
         return this;
     }
+    public raw(sql: string): Promise<any> {
+        return new Promise( (resolve, rejects) => {
+            this.conex.query(sql, (error: any, results: any, fields: any) => {
+                if (Object.keys(results).length === 1 ) {
+                    resolve(results[0]);
+                } else if (Object.keys(results[0]).length > 1 ) {
+                    resolve(results);
+                } else {
+                    resolve({
+                        rowCount: 0,
+                    });
+                }
+            });
+        });
+    }
     public async exec(): Promise <any> {
         const query = this.sql + this.inner + this.sqlWh;
         let condition: any = [];
@@ -84,7 +102,7 @@ class Conexion {
         return new Promise( ( resolve, reject ) => {
             switch (this.typeSQL) {
                 case 'SELECT':
-
+                    console.log(query);
                     this.conex.query(query, condition, (error: any, results: any, fields: any) => {
 
                         if (Object.keys(results).length === 1 ) {
@@ -112,6 +130,23 @@ class Conexion {
             }
         });
 
+    }
+
+    public async paginate(page: number = 1, rowsPag: number = 10): Promise<any> {
+        const perPage = rowsPag;
+        const offset = (page - 1) * perPage;
+        const rs = await this.raw('select count(id) as total from ' + this.table);
+        const totalRows = rs.total;
+        const totalPages = Math.ceil(totalRows / perPage);
+
+        const SQL = this.sql + this.inner + this.sqlWh + ' LIMIT ' + offset +',' + perPage;
+        const data = await this.raw(SQL);
+
+        return {
+            paginate_data: data,
+            paginate_totalRows: totalRows,
+            paginate_totalPages: totalPages,
+        };
     }
 
     private clearVar() {
