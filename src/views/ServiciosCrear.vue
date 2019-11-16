@@ -26,9 +26,9 @@
                 </div>
             </div>
         </header>
-        <h3 class="mt-3">{{ accion }} servicios</h3>
+        <h3 class="form-title">{{ accion }} servicios</h3>
         <hr>
-        <b-form @submit.prevent="onSubmit" id="form" class="mt-5">
+        <b-form @submit.prevent="onSubmit" id="form" class="form-custom">
             <b-row>
                 <b-col cols = "2">
                     <b-form-group label="Código" label-for = "id_servicio">

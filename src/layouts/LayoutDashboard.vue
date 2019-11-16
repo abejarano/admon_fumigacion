@@ -5,7 +5,7 @@
                 <MenuPrincipal />
                 <div class="pane">
                     <section class="d-flex justify-content-center h-100">
-                        <div class="col-12 p-3">
+                        <div class="col-12 p-0" id="body-form">
                             
                             <router-view />
                             

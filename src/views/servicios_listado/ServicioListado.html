@@ -13,80 +13,82 @@
             </div>
         </div>
     </header>
-    <h3 class="mt-3">Listado de servicios</h3>
-    <hr>
+    <h3 class="form-title">Listado de servicios</h3>
+    
     <br>
-    <div class="overflow-auto">
-        <b-row>
-            <b-col cols="3">
-                <b-input-group size="sm">
-                    <b-form-input
-                        v-model="filter"
-                        type="search"
-                        placeholder="Buscar por nombre de servicio"
-                    >
-                </b-form-input>
-                <b-input-group-append>
-                    <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
-                </b-input-group-append>
-                </b-input-group>
-            </b-col>
-            <b-col cols = "7">
-                <b-pagination align="center" @input="loadData(currentPage)"
-                    v-model="currentPage"
-                    :total-rows="totalRows"
-                    :per-page="perPage"
-                ></b-pagination>
-            </b-col>
-            <b-col cols = "2">
-                Total registros: {{ totalRows }}
-            </b-col>
-        </b-row>
+    <section class="form-custom">
+        <div class="overflow-auto">
+            <b-row>
+                <b-col cols="3">
+                    <b-input-group size="sm">
+                        <b-form-input
+                            v-model="filter"
+                            type="search"
+                            placeholder="Buscar por nombre de servicio"
+                        >
+                    </b-form-input>
+                    <b-input-group-append>
+                        <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                    </b-input-group-append>
+                    </b-input-group>
+                </b-col>
+                <b-col cols = "7">
+                    <b-pagination align="center" @input="loadData(currentPage)"
+                        v-model="currentPage"
+                        :total-rows="totalRows"
+                        :per-page="perPage"
+                    ></b-pagination>
+                </b-col>
+                <b-col cols = "2">
+                    Total registros: {{ totalRows }}
+                </b-col>
+            </b-row>
 
-    </div>
+        </div>
 
-    <b-table id="my-table" striped hover :busy="loadTable" :items="data" :fields="fields" :filter="filter" @filtered="onFiltered">
-        <template v-slot:table-busy>
-            <div class="text-center text-danger my-2">
-                <b-spinner class="align-middle"></b-spinner>
-                <br>
-                <strong>Cargando datos ...</strong>
-            </div>
-        </template>
-        <template v-slot:head(check)="data">
-            <div class="text-center">
-                <b-form-checkbox @change="selectAll"></b-form-checkbox>
-            </div>
-        </template>
-        <template v-slot:cell(check) = "data">
-            <div class="text-center">
-                <b-form-checkbox :value="data.item.id" v-model="check" @change="select(data.item.id)"></b-form-checkbox>
-            </div>
-        </template>
-        <template v-slot:cell(codigo)="data">
-            <router-link :to="'/servicios/actualizar/' + data.item.codigo">
-                {{ data.item.codigo }}
-            </router-link> 
-        </template>
-        <template v-slot:cell(monto)="data">
-            {{ data.item.monto | formatNumber}}
-        </template>
-        <template v-slot:cell(estatus)="data">
-            <div class="text-center">
-                <strong v-if = "data.item.estatus == 'A'">Activo</strong>
-                <strong v-if = "data.item.estatus == 'I'">Inactivo</strong>
-            </div>
-            
-        </template>
-        <template v-slot:cell(button) = "data">
-            <div class="text-center">
-                <router-link :to="'/servicios/actualizar/' + data.item.codigo" class="btn btn-success btn-sm mr-2">
-                    <span class="icon icon-pencil" style="color: white;"></span>
-                </router-link>
-                <b-button variant="danger" size="sm" class="mr-3" v-on:click="deleteItem(data.item.codigo)">
-                    <span class="icon icon-trash" style="color: white;"></span>
-                </b-button>
-            </div>
-        </template>
-    </b-table>
+        <b-table striped hover :busy="loadTable" :items="data" :fields="fields" :filter="filter" @filtered="onFiltered">
+            <template v-slot:table-busy>
+                <div class="text-center text-danger my-2">
+                    <b-spinner class="align-middle"></b-spinner>
+                    <br>
+                    <strong>Cargando datos ...</strong>
+                </div>
+            </template>
+            <template v-slot:head(check)="data">
+                <div class="text-center">
+                    <b-form-checkbox @change="selectAll"></b-form-checkbox>
+                </div>
+            </template>
+            <template v-slot:cell(check) = "data">
+                <div class="text-center">
+                    <b-form-checkbox :value="data.item.id" v-model="check" @change="select(data.item.id)"></b-form-checkbox>
+                </div>
+            </template>
+            <template v-slot:cell(codigo)="data">
+                <router-link :to="'/servicios/actualizar/' + data.item.codigo">
+                    {{ data.item.codigo }}
+                </router-link> 
+            </template>
+            <template v-slot:cell(monto)="data">
+                {{ data.item.monto | formatNumber}}
+            </template>
+            <template v-slot:cell(estatus)="data">
+                <div class="text-center">
+                    <strong v-if = "data.item.estatus == 'A'">Activo</strong>
+                    <strong v-if = "data.item.estatus == 'I'">Inactivo</strong>
+                </div>
+                
+            </template>
+            <template v-slot:cell(button) = "data">
+                <div class="text-center">
+                    <router-link :to="'/servicios/actualizar/' + data.item.codigo" class="btn btn-success btn-sm mr-2">
+                        <span class="icon icon-pencil" style="color: white;"></span>
+                    </router-link>
+                    <b-button variant="danger" size="sm" class="mr-3" v-on:click="deleteItem(data.item.codigo)">
+                        <span class="icon icon-trash" style="color: white;"></span>
+                    </b-button>
+                </div>
+            </template>
+        </b-table>
+    </section>
 </div>

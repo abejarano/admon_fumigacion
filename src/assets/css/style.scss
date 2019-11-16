@@ -1,0 +1,91 @@
+@font-face {font-family: nexbold; src: url(assets/fonts/NexaBold.otf);}
+@font-face {font-family: nexlig; src: url(assets/fonts/NexaLight.otf);}
+@font-face {font-family: nexregular; src: url(assets/fonts/NexaRegular.otf);}
+
+$fondo-naranja: #fb5e17;
+$fondo-negro:   #191919;
+$letras-morado: #8c004b;
+$azul: #212780;
+$color-blanco: #d0d0d0;
+
+html, body {
+font-size: 9pt;
+font-family: nexlig !important;
+}
+.form-title {
+    font-family: nexbold;
+    font-size: 22pt;
+    color: $fondo-negro;
+    text-transform: uppercase;
+    position: relative;
+    padding: 10px 6px;
+    // background: $fondo-naranja;
+    margin-bottom: 20px;
+}
+.form-title::before{
+    content: '';
+    border-bottom:2px solid $fondo-naranja;
+    position: absolute;
+    bottom: 1rem;
+    width: 40%;
+}
+.sidebar {
+    background: $fondo-negro !important;
+}
+a {
+color: #333;
+cursor: pointer;
+}
+.nav-group-title {
+    font-family: nexregular;
+    margin-bottom: 6px !important;
+}
+.nav-group-item {
+    font-family: nexregular !important;
+    color: $color-blanco !important;
+    padding: 5px 10px 5px 25px !important;
+}
+.router-link-active{
+    background-color: $fondo-naranja;
+    
+}
+.toolbar-header {
+    border: 1px solid #c2c0c2 !important;
+}
+.toolbar-header .btn-default {
+    border-color: #c2c0c2 #c2c0c2 #a19fa1;
+}
+.toolbar-actions  a {
+cursor: pointer;
+}
+th {text-transform: uppercase}
+fieldset {
+padding: 6px 10px !important;
+border:1px solid #fd945a !important;
+border-radius: 6px;
+}
+legend{
+width: initial !important;
+padding-left: 10px !important;
+padding-right: 10px !important;
+font-family: nexregular;
+}
+
+th {
+font-size: 8pt; font-weight: bold !important;
+}
+.circle {
+
+background: #fd945a;
+color:white;
+padding: 7px 8px;
+line-height: 34px;
+border-radius: 100px;
+font-size: 1rem;
+}
+.logo {
+    background: $fondo-negro;
+}
+.form-custom {
+    padding: 10px 22px !important;
+}

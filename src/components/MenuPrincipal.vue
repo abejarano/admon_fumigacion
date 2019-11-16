@@ -1,7 +1,7 @@
 <template>
     <div class="pane pane-sm sidebar">
-        <div class="text-center mt-2">
-            <b-img :src="require(`@/assets/logo.jpeg`)" rounded="circle"  width="100px"></b-img>
+        <div class="text-center logo pb-4">
+            <b-img :src="require(`@/assets/logo.jpeg`)" rounded="circle"  width="140px"></b-img>
             
         </div>
         <nav class="nav-group mt-3">
