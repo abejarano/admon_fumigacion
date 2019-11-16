@@ -126,7 +126,7 @@ class Conexion {
                     this.clearVar();
 
                     if (Object.keys(results).length === 1 ) {
-                        resolve(results[0]);
+                        resolve(JSON.parse( JSON.stringify(results[0])));
                     } else if (Object.keys(results[0]).length > 1 ) {
                         resolve(JSON.parse( JSON.stringify(results)));
                     } else {

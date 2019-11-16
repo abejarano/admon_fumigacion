@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import InicioSesion from '@/components/InicioSesion.vue';
-import Empresa from '@/views/empresa/Empresa.vue';
 
 
 Vue.use(VueRouter);
@@ -35,7 +34,7 @@ const routes = [
   {
     path: '/empresa',
     name: 'empresa',
-    component: Empresa,
+    component: () => import('../views/Empresa.vue'),
   },
   {
     path: '/servicios',
