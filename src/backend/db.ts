@@ -99,7 +99,8 @@ class Conexion {
         return new Promise( (resolve, rejects) => {
             this.conex.query(sql, (error: any, results: any, fields: any) => {
                 if (Object.keys(results).length === 1 ) {
-                    resolve(results[0]);
+                    results = results[0];
+                    resolve(JSON.parse( JSON.stringify(results)));
                 } else if (Object.keys(results[0]).length > 1 ) {
                     resolve(JSON.parse( JSON.stringify(results)));
                 } else {

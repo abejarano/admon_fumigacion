@@ -101,7 +101,7 @@ export default class ServicosCrear extends Vue {
             message: '¿Desea '+this.$route.params.action+' el servicio?',
             detail: 'Se registrará una nuevo servicio en la base de datos'
         });
-        console.log(resp);
+        
         if (resp === 2 || resp === 0) {
             return;
         }
