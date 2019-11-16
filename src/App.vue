@@ -35,11 +35,13 @@ export default class App extends Vue {
   }
   .toolbar-header {
     border: 1px solid #c2c0c2 !important;
-}
-.toolbar-header .btn-default {
-border-color: #c2c0c2 #c2c0c2 #a19fa1;
-}
-    
+  }
+  .toolbar-header .btn-default {
+    border-color: #c2c0c2 #c2c0c2 #a19fa1;
+  }
+  .toolbar-actions  a {
+    cursor: pointer;
+  }
   fieldset {
     padding: 6px 10px !important;
     border:1px solid #fd945a !important;

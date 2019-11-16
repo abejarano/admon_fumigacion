@@ -11,6 +11,18 @@
                         <span class="icon icon-menu pr-4"></span>
                         Listado
                     </router-link>
+                    <button class="btn btn-default" v-on:click = "onSubmit('l')">
+                        <span class="icon icon-floppy pr-4"></span>
+                        Guardar
+                    </button>
+                    <button class="btn btn-default" v-on:click = "onSubmit('o')">
+                        <span class="icon icon-floppy pr-4"></span>
+                        Guardar y añadir otro
+                    </button>
+                    <button class="btn btn-default" v-on:click = "resetForm">
+                        <span class="icon icon-arrows-ccw pr-4"></span>
+                        Limpiar
+                    </button>
                 </div>
             </div>
         </header>
@@ -48,20 +60,6 @@
             </b-row>
             <br>    
             <hr>
-            <div class="text-center mt-5">
-                <b-button variant="success" size="md" v-on:click = "onSubmit('l')">
-                    <span class="icon icon-floppy pr-4" style="color: white;"></span>
-                    Guardar
-                </b-button>
-                <b-button variant="info" class="ml-2" size="md" v-on:click = "onSubmit('s')">
-                    <span class="icon icon-floppy pr-4" style="color: white;"></span>
-                    Guardar y añadir otro
-                </b-button>
-                <b-button class="ml-2"  v-on:click = "resetForm" size="md">
-                    <span class="icon icon-doc pr-4" style="color: white;"></span>
-                    Limpiar
-                </b-button>
-            </div>
                 
         </b-form>
     </section>
@@ -103,7 +101,7 @@ export default class ServicosCrear extends Vue {
             message: '¿Desea '+this.$route.params.action+' el servicio?',
             detail: 'Se registrará una nuevo servicio en la base de datos'
         });
-        
+        console.log(resp);
         if (resp === 2 || resp === 0) {
             return;
         }

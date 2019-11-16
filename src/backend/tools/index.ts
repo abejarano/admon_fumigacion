@@ -20,7 +20,7 @@ export default class Tools {
     public showMessageQuestion(question: any): Promise<any> {
         const options = {
             type: 'question',
-            buttons: ['Cancel', 'Yes, please', 'No, thanks'],
+            buttons: ['Cancel', 'Si, por favor', 'No, gracias'],
             defaultId: 2,
             title: 'Question',
             message: question.message,
@@ -28,10 +28,8 @@ export default class Tools {
             checkboxChecked: false,
         };
         return new Promise( (resolve: any, reject: any) => {
-            (async () => {
-                const response = await dialog.showMessageBox(options);
-                resolve(response);
-            })();
+            const res = dialog.showMessageBoxSync(options);
+            resolve(res);
 
         });
 
