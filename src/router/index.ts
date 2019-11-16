@@ -20,17 +20,17 @@ const routes = [
   {
     path: '/clientes',
     name: 'clientes',
-    component: () => import('../components/clientes/ClientesListado.vue'),
+    component: () => import('../views/clientes_listado/ClientesListado.vue'),
   },
   {
     path: '/clientes/:action',
     name: 'clientes_crear',
-    component: () => import('../components/clientes/ClientesCrear.vue'),
+    component: () => import('../views/clientes_crear/ClientesCrear.vue'),
   },
   {
     path: '/clientes/:action/:id',
     name: 'clientes_editar',
-    component: () => import('../components/clientes/ClientesCrear.vue'),
+    component: () => import('../views/clientes_crear/ClientesCrear.vue'),
   },
   {
     path: '/empresa',
@@ -40,17 +40,17 @@ const routes = [
   {
     path: '/servicios',
     name: 'servicios',
-    component: () => import('../components/servicios/ServiciosListado.vue'),
+    component: () => import('../views/servicios_listado/ServiciosListado.vue'),
   },
   {
     path: '/servicios/:action',
     name: 'servicios_crear',
-    component: () => import('../components/servicios/ServiciosCrear.vue'),
+    component: () => import('../views/ServiciosCrear.vue'),
   },
   {
     path: '/servicios/:action/:id',
     name: 'servicios_editar',
-    component: () => import('../components/servicios/ServiciosCrear.vue'),
+    component: () => import('../views/ServiciosCrear.vue'),
   },
   {
     path: '*',

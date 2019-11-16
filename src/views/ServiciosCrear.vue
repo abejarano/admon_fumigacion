@@ -3,7 +3,7 @@
         <header class="toolbar toolbar-header">
             <div class="toolbar-actions">
                 <div class="btn-group">
-                    <router-link class="btn btn-default" to="/servicios/crear">
+                    <router-link class="btn btn-default" to="/servicios/crear" exact>
                         <span class="icon icon-doc pr-4"></span>
                         Nuevo
                     </router-link>
@@ -85,6 +85,7 @@ export default class ServicosCrear extends Vue {
     private searchCode: string = '';
 
     public created() {
+        console.log(this.$route.params);
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
         if (this.$route.params.action === 'crear') {
             this.is_update = false;
@@ -125,9 +126,15 @@ export default class ServicosCrear extends Vue {
     }
 
     public resetForm() {
+        
         Object.keys(this.form).forEach( (key,index) => {
             this.form[key] = '';
         });
+        // this.$refs.codigo.focus();
+        this.is_update = false;
+        if (this.$route.params.action !== 'crear') {
+            this.$router.push('/servicios/crear');
+        }
         
     }
 

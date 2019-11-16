@@ -42,6 +42,7 @@ export default class App extends Vue {
   .toolbar-actions  a {
     cursor: pointer;
   }
+  th {text-transform: uppercase}
   fieldset {
     padding: 6px 10px !important;
     border:1px solid #fd945a !important;
