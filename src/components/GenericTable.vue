@@ -1,5 +1,6 @@
 <script lang = "ts">
 import { Vue, Component } from 'vue-property-decorator';
+import Tools from '../backend/tools';
 
 @Component({})
 export default class GenericTable extends Vue {

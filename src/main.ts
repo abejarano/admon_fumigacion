@@ -6,7 +6,9 @@ import store from './store';
 import './assets/css/photon.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
-import VueMask from 'v-mask';
+
+// tslint:disable-next-line:no-var-requires
+const VueMask = require('v-mask').default;
 
 
 Vue.use(BootstrapVue);

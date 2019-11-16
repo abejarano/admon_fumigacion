@@ -20,7 +20,7 @@
             <b-row>
                 <b-col cols = "2">
                     <b-form-group label="Código" label-for = "id_servicio">
-                        <b-input ref = "codigo"  v-mask="'sv####'"  type="text" id = "id_servicio" required = "required" maxlength = "6" autofocus v-model="form.codigo"></b-input>
+                        <b-input ref = "codigo" :disabled="is_update"  v-mask="'sv####'"  type="text" id = "id_servicio" required = "required" maxlength = "6" autofocus v-model="form.codigo"></b-input>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -38,20 +38,29 @@
                     </b-form-group>
                 </b-col>
                 <b-col cols="3">
-                    <b-form-group label="¿Servicio activo?">
-                        <b-form-radio-group class="text-center" id="radio-group-2" name="radio-sub-component">
-                            <b-form-radio v-model="form.estatus" value="A">Si</b-form-radio>
-                            <b-form-radio v-model="form.estatus" class="ml-5" value="I">No</b-form-radio>
-                        </b-form-radio-group>
+                    <b-form-group label="¿Activo?" label-for="id_estatus">
+                        <b-form-select v-model="form.estatus" id="id_estatus">
+                            <option value="A">Si</option>
+                            <option value="I">No</option>
+                        </b-form-select>
                     </b-form-group>
                 </b-col>
             </b-row>
             <br>    
             <hr>
             <div class="text-center mt-5">
-                <b-button variant="success" size="lg" v-on:click = "onSubmit('l')">Guardar</b-button>
-                <b-button variant="info" class="ml-2" size="lg" v-on:click = "onSubmit('s')">Guardar y añadir otro</b-button>
-                <b-button class="ml-2"  v-on:click = "resetForm" size="lg">Limpiar</b-button>
+                <b-button variant="success" size="md" v-on:click = "onSubmit('l')">
+                    <span class="icon icon-floppy pr-4" style="color: white;"></span>
+                    Guardar
+                </b-button>
+                <b-button variant="info" class="ml-2" size="md" v-on:click = "onSubmit('s')">
+                    <span class="icon icon-floppy pr-4" style="color: white;"></span>
+                    Guardar y añadir otro
+                </b-button>
+                <b-button class="ml-2"  v-on:click = "resetForm" size="md">
+                    <span class="icon icon-doc pr-4" style="color: white;"></span>
+                    Limpiar
+                </b-button>
             </div>
                 
         </b-form>

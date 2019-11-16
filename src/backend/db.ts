@@ -45,7 +45,7 @@ class Conexion {
             indx = indx + 1;
 
         }
-        
+
         return this;
     }
 
@@ -101,7 +101,7 @@ class Conexion {
                 if (Object.keys(results).length === 1 ) {
                     resolve(results[0]);
                 } else if (Object.keys(results[0]).length > 1 ) {
-                    resolve(results);
+                    resolve(JSON.parse( JSON.stringify(results)));
                 } else {
                     resolve({
                         rowCount: 0,
@@ -117,44 +117,52 @@ class Conexion {
             condition = this.whereValue;
         }
         return new Promise( ( resolve, reject ) => {
-            switch (this.typeSQL) {
-                case 'SELECT':
-                    this.conex.query(query, condition, (error: any, results: any, fields: any) => {
-                        if (error) {
-                            reject(error);
-                        }
-                        this.clearVar();
+            if (this.typeSQL === 'SELECT') {
+                this.conex.query(query, condition, (error: any, results: any, fields: any) => {
+                    if (error) {
+                        reject(error);
+                    }
+                    this.clearVar();
 
-                        if (Object.keys(results).length === 1 ) {
-                            resolve(results[0]);
-                        } else if (Object.keys(results[0]).length > 1 ) {
-                            resolve(results);
-                        } else {
-                            resolve({
-                                rowCount: 0,
-                            });
-                        }
-                    });
-                    break;
-                default:
-                    this.conex.query(query, condition, (error: any, results: any) => {
-                        if (error) {
-                            reject(error);
-                            return;
-                        }
+                    if (Object.keys(results).length === 1 ) {
+                        resolve(results[0]);
+                    } else if (Object.keys(results[0]).length > 1 ) {
+                        resolve(JSON.parse( JSON.stringify(results)));
+                    } else {
+                        resolve({
+                            rowCount: 0,
+                        });
+                    }
+                });
 
-                        if (this.typeSQL === 'INSERT') {
-                            this.clearVar();
-                            resolve(results.insertId);
-                        } else if (this.typeSQL === 'UPDATE') {
-                            this.clearVar();
-                            resolve(results.affectedRows);
-                        }
-
-                    });
             }
+            if (this.typeSQL === 'INSERT' || this.typeSQL === 'UPDATE' || this.typeSQL === 'DELETE') {
+                this.conex.query(query, condition, (error: any, results: any) => {
+                    if (error) {
+                        reject(error);
+                        return;
+                    }
+
+                    if (this.typeSQL === 'INSERT') {
+                        this.clearVar();
+                        resolve(results.insertId);
+                    } else if (this.typeSQL === 'UPDATE' || this.typeSQL === 'DELETE') {
+                        this.clearVar();
+                        resolve(results.affectedRows);
+                    }
+
+                });
+            }
+
         });
 
+    }
+
+    public delete(table: string) {
+        this.table = table;
+        this.sql = 'DELETE FROM ' + table;
+        this.typeSQL = 'DELETE';
+        return this;
     }
 
     public async paginate(page: number = 1, rowsPag: number = 10): Promise<any> {

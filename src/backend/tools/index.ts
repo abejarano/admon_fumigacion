@@ -8,6 +8,15 @@ export default class Tools {
     public static makePassword(pass: string) {
         return  bcrypt.hash(pass, 10);
     }
+
+    public static json2array(json: any) {
+        const result: any = [];
+        const keys = Object.keys(json);
+        keys.forEach((key) => {
+            result.push(json[key]);
+        });
+        return result;
+    }
     public showMessageQuestion(question: any): Promise<any> {
         const options = {
             type: 'question',
@@ -19,9 +28,11 @@ export default class Tools {
             checkboxChecked: false,
         };
         return new Promise( (resolve: any, reject: any) => {
-            dialog.showMessageBox(null, options,(response: any) => {
+            (async () => {
+                const response = await dialog.showMessageBox(options);
                 resolve(response);
-            });
+            })();
+
         });
 
     }
@@ -38,5 +49,4 @@ export default class Tools {
     public async comparePassword(pass: string, hash: string): Promise<boolean> {
         return await bcrypt.compare(pass, hash);
     }
-
 }

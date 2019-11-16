@@ -31,12 +31,15 @@
                 </b-input-group-append>
                 </b-input-group>
             </b-col>
-            <b-col cols = "9">
+            <b-col cols = "7">
                 <b-pagination align="center" @input="loadData(currentPage)"
                     v-model="currentPage"
                     :total-rows="totalRows"
                     :per-page="perPage"
                 ></b-pagination>
+            </b-col>
+            <b-col cols = "2">
+                Total registros: {{ totalRows }}
             </b-col>
         </b-row>
 
@@ -77,10 +80,10 @@
         </template>
         <template v-slot:cell(button) = "data">
             <div class="text-center">
-                <b-button variant="success" size="sm" class="mr-3">
+                <router-link :to="'/servicios/actualizar/' + data.item.codigo" class="btn btn-success btn-sm mr-2">
                     <span class="icon icon-pencil" style="color: white;"></span>
-                </b-button>
-                <b-button variant="danger" size="sm" class="mr-3">
+                </router-link>
+                <b-button variant="danger" size="sm" class="mr-3" v-on:click="deleteItem(data.item.codigo)">
                     <span class="icon icon-trash" style="color: white;"></span>
                 </b-button>
             </div>

@@ -4,6 +4,8 @@
 import { Vue, Component, Prop } from 'vue-property-decorator';
 import DB from '@/backend/db';
 import GenericTabble from '@/components/GenericTable.vue';
+import Tools from '@/backend/tools';
+
 const numeral = require('numeral');
 
 Vue.filter("formatNumber", (value: any) => {
@@ -22,6 +24,7 @@ export default class ServicioListado extends GenericTabble {
     private totalRows: number = 1;
     private perPage: number = 14;   
     private checkAll: boolean = false;
+    private tools = new Tools();
     
     public async created() {
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
@@ -72,7 +75,24 @@ export default class ServicioListado extends GenericTabble {
         // Trigger pagination to update the number of buttons/pages due to filtering
         this.totalRows = filteredItems.length
         this.currentPage = 1
-      }
+    }
+    private async deleteItem(id: any) {
+        
+        const resp = await this.tools.showMessageQuestion({
+            message: '¿Desea eliminar el servicio?',
+            detail: ''
+        });
+        
+        if (resp === 2 || resp === 0) {
+            return;
+        }
+        
+        DB.delete('servicios').where({
+            codigo: id
+        }).exec().then( result => {
+           this.loadData(this.currentPage); 
+        });
+    }
     
 }
 </script>
