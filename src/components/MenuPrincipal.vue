@@ -23,10 +23,14 @@
                 <span class="icon icon-clock"></span>
                 Cronograma de trabajos
             </span>
-             <router-link class="nav-group-item" to="/clientes">
+            <router-link class="nav-group-item" to="/clientes">
                 <span class="icon icon-user"></span>
                 Clientes
-             </router-link>
+            </router-link>
+            <router-link class="nav-group-item" to="/presupuestos/crear">
+                <span class="icon icon-keyboard"></span>
+                Presupuestos
+            </router-link>
             <span class="nav-group-item">
                 <span class="icon icon-print"></span>
                 Facturación

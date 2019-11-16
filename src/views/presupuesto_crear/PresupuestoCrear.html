@@ -1,0 +1,97 @@
+<section>
+    <header class="toolbar toolbar-header">
+        <div class="toolbar-actions">
+            <div class="btn-group">
+                <router-link class="btn btn-default" to="/presupuesto/crear">
+                    <span class="icon icon-doc pr-4"></span>
+                    Nuevo
+                </router-link>
+                <router-link class="btn btn-default" to="/clientes">
+                    <span class="icon icon-menu pr-4"></span>
+                    Listado
+                </router-link>
+                <button class="btn btn-default" v-on:click = "onSubmit('l')">
+                    <span class="icon icon-floppy pr-4"></span>
+                    Guardar
+                </button>
+                <button class="btn btn-default" v-on:click = "onSubmit('o')">
+                    <span class="icon icon-floppy pr-4"></span>
+                    Guardar y añadir otro
+                </button>
+                <button class="btn btn-default" v-on:click = "resetForm">
+                    <span class="icon icon-arrows-ccw pr-4"></span>
+                    Limpiar
+                </button>
+            </div>
+        </div>
+    </header>
+    <h3 class="form-title">{{accion}} presupuestos</h3>
+    <section class="form-custom">
+        <b-form @submit.prevent="onSubmit">
+            <b-row>
+                <b-col cols = "3">
+                    <b-form-group label = "Nro. Presupuesto" label-for="id_rif">
+                        <b-form-input type = "text"></b-form-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col cols = "3">
+                    <b-form-group label = "RIF / C.I" label-for="id_rif">
+                        <b-form-input type = "text" :disabled="is_update" v-mask = "'A-#########'" required v-model = "form.rif" placeholder = "Rif / C.I" id = "id_rif"></b-form-input>
+                    </b-form-group>
+                </b-col>
+                <b-col cols = "9">
+                    <b-form-group label="Razon social" label-for = "id_razon_social">
+                        <b-input type = "text" id = "id_razon_social"></b-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+        </b-form>
+        <br>
+        
+        <b-button  variant="success" >
+            <span class="icon icon-plus-circled" style="color: white;"></span>
+        </b-button>
+        <b-button  variant="success" class="ml-2">
+            <span class="icon icon-minus-circled" style="color: white;"></span>
+        </b-button>
+        
+        <b-table-simple hover small caption-top responsive class="mt-2">
+            <b-thead head-variant="dark">
+                <b-tr>
+                    <b-th></b-th>
+                    <b-th>Servicio</b-th>
+                    <b-th>Cantidad</b-th>
+                    <b-th>Precio unitario</b-th>
+                    <b-th>Total</b-th>
+                </b-tr>
+            </b-thead>
+        </b-table-simple>
+        <div class="d-flex flex-row-reverse bd-highlight">
+            <b-row>
+                <b-col cols = "12">
+                    <b-form-group label ="Total" label-for="id_sub_total">
+                        <b-form-input id="id_sub_total" class="float-right"></b-form-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col cols = "12">
+                    <b-form-group label ="I.V.A" label-for="id_sub_total">
+                        <b-form-input id="id_sub_total" class="float-right"></b-form-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col cols = "12">
+                    <b-form-group label ="Sub - total" label-for="id_sub_total">
+                        <b-form-input id="id_sub_total" class="float-right"></b-form-input>
+                    </b-form-group>
+                </b-col>
+            </b-row>
+            
+            
+        </div>
+    </section>
+</section>

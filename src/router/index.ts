@@ -52,6 +52,11 @@ const routes = [
     component: () => import('../views/ServiciosCrear.vue'),
   },
   {
+    path: '/presupuestos/:action',
+    name: 'presupuesto_crear',
+    component: () => import('../views/presupuesto_crear/PresupuestoCrear.vue'),
+  },
+  {
     path: '*',
     redirect: '/',
   },

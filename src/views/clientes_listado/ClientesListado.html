@@ -45,7 +45,7 @@
 
         </div>
         
-        <b-table id="my-table" striped hover :busy="loadTable" :items="data" :fields="fields" :filter="filter" @filtered="onFiltered">
+        <b-table head-variant="dark" id="my-table" hover :busy="loadTable" :items="data" :fields="fields" :filter="filter" @filtered="onFiltered">
             <template v-slot:table-busy>
                 <div class="text-center text-danger my-2">
                     <b-spinner class="align-middle"></b-spinner>
