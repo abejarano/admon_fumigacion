@@ -124,15 +124,15 @@ class Conexion {
                         reject(error);
                     }
                     this.clearVar();
-
-                    if (Object.keys(results).length === 1 ) {
-                        resolve(JSON.parse( JSON.stringify(results[0])));
-                    } else if (Object.keys(results[0]).length > 1 ) {
-                        resolve(JSON.parse( JSON.stringify(results)));
-                    } else {
+                    
+                    if (results.length === 0) {
                         resolve({
                             rowCount: 0,
                         });
+                    } else if (results.length === 1) {
+                        resolve(JSON.parse( JSON.stringify(results[0])));
+                    } else {
+                        resolve(JSON.parse( JSON.stringify(results)));
                     }
                 });
 
