@@ -18,7 +18,9 @@ export default class Presupuesto extends Vue {
         iva: 0,
         porcentaje_iva: '',
         sub_total: 0,
-        total: 0
+        total: 0,
+        rif: '',
+        razon_social: ''
     };
 
     private async created() {
@@ -78,6 +80,18 @@ export default class Presupuesto extends Vue {
         this.form.iva = iva;
 
         this.form.total = (Number(iva) + subtotal).toFixed(2);
+    }
+
+    private async setSearchClient(rifClient: string) {
+        
+        const data = await DB.select('clientes').where({
+            rif: rifClient
+        }).exec();
+        if (data.rowCount === 0) {
+            return;
+        }
+
+        this.form.razon_social = data.razon_social;
     }
 }
 </script>

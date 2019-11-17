@@ -124,7 +124,7 @@ class Conexion {
                         reject(error);
                     }
                     this.clearVar();
-                    
+
                     if (results.length === 0) {
                         resolve({
                             rowCount: 0,

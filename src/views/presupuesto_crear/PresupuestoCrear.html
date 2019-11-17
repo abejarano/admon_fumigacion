@@ -37,7 +37,10 @@
             <b-row>
                 <b-col cols = "3">
                     <b-form-group label = "RIF / C.I" label-for="id_rif">
-                        <b-form-input type = "text" :disabled="is_update" v-mask = "'A-#########'"></b-form-input>
+                        <b-form-input type = "text" v-on:keyup.enter = "setSearchClient($event.target.value)" autofocus :disabled="is_update" v-mask = "'A-#########'"></b-form-input>
+                        <b-form-text id="password-help-block">
+                            Luego de escribir el Rif del cliente presione ENTER.
+                        </b-form-text>
                     </b-form-group>
                 </b-col>
                 <b-col cols = "1" class="mt-4 pt-2">
@@ -47,7 +50,7 @@
                 </b-col>
                 <b-col cols = "6">
                     <b-form-group label = "Razon social" label-for="id_raszon_social">
-                        <b-form-input type = "text" id="id_raszon_social"></b-form-input>
+                        <b-form-input type = "text" id="id_raszon_social" v-model = "form.razon_social" disabled></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
@@ -57,10 +60,10 @@
 
         <br>
         
-        <b-button  variant="success" v-on:click="openModelService">
+        <b-button  variant="success" v-on:click="openModelService" size = "sm">
             <span class="icon icon-plus-circled" style="color: white;"></span>
         </b-button>
-        <b-button  variant="success" class="ml-2">
+        <b-button  variant="success" class="ml-2" size = "sm">
             <span class="icon icon-minus-circled" style="color: white;"></span>
         </b-button>
         <!-- table -->
@@ -100,4 +103,5 @@
         </div>
     </section>
     <AddServiceTable @makeAddItem="setAddItem"></AddServiceTable>
+
 </section>

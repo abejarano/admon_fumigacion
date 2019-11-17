@@ -1,6 +1,5 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
-import InicioSesion from '@/components/InicioSesion.vue';
 
 
 Vue.use(VueRouter);
@@ -9,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'InicioSesion',
-    component: InicioSesion,
+    component: () => import('../views/InicioSesion.vue'),
   },
   {
     path: '/dashboard',
