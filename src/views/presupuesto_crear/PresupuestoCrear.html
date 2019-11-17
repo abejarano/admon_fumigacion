@@ -50,48 +50,47 @@
         </b-form>
         <br>
         
-        <b-button  variant="success" >
+        <b-button  variant="success" v-on:click="openModelService">
             <span class="icon icon-plus-circled" style="color: white;"></span>
         </b-button>
         <b-button  variant="success" class="ml-2">
             <span class="icon icon-minus-circled" style="color: white;"></span>
         </b-button>
-        
-        <b-table-simple hover small caption-top responsive class="mt-2">
-            <b-thead head-variant="dark">
-                <b-tr>
-                    <b-th></b-th>
-                    <b-th>Servicio</b-th>
-                    <b-th>Cantidad</b-th>
-                    <b-th>Precio unitario</b-th>
-                    <b-th>Total</b-th>
-                </b-tr>
-            </b-thead>
-        </b-table-simple>
+        <!-- table -->
+        <b-table head-variant="dark" :items="data" :fields="fields" hover small caption-top responsive class="mt-2">
+            <template v-slot:cell(check) = "data">
+                <div class="text-center">
+                    <b-form-checkbox :value="data.item.codigo" @change="select(data.item.codigo)"></b-form-checkbox>
+                </div>
+            </template>
+        </b-table>
+
+        <!-- total -->
         <div class="d-flex flex-row-reverse bd-highlight">
             <b-row>
                 <b-col cols = "12">
-                    <b-form-group label ="Total" label-for="id_sub_total">
-                        <b-form-input id="id_sub_total" class="float-right"></b-form-input>
+                    <b-form-group label ="Total" label-for="id_total">
+                        <b-form-input id="id_total" class="float-right" disabled v-model = "form.total"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
-            <b-row>
+            <b-row class="ml-3 mr-3">
                 <b-col cols = "12">
-                    <b-form-group label ="I.V.A" label-for="id_sub_total">
-                        <b-form-input id="id_sub_total" class="float-right"></b-form-input>
-                    </b-form-group>
+                    <div class="form-group">
+                        <label>I.V.A ({{form.porcentaje_iva}}%)</label>
+                        <b-form-input id="id_sub_total" class="float-right" v-model = "form.iva" disabled></b-form-input>
+                    </div>
                 </b-col>
             </b-row>
             <b-row>
                 <b-col cols = "12">
                     <b-form-group label ="Sub - total" label-for="id_sub_total">
-                        <b-form-input id="id_sub_total" class="float-right"></b-form-input>
+                        <b-form-input id="id_sub_total" class="float-right" disabled v-model = "form.sub_total"></b-form-input>
                     </b-form-group>
                 </b-col>
             </b-row>
             
-            
         </div>
     </section>
+    <AddServiceTable @makeAddItem="setAddItem"></AddServiceTable>
 </section>

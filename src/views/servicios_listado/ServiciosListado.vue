@@ -13,7 +13,7 @@ Vue.filter("formatNumber", (value: any) => {
 });
 
 @Component({
-    name: 'ServicioListado'
+    name: 'ServicioListado',
 })
 export default class ServicioListado extends GenericTabble {
     public data: any = [];
