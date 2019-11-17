@@ -75,7 +75,7 @@ samp {
   font-size: 1em;
 }
 
-button,
+
 input,
 optgroup,
 select,
@@ -361,7 +361,7 @@ h6 {
   background-image: none;
 }
 
-.btn-primary,
+
 .btn-positive,
 .btn-negative,
 .btn-warning {
@@ -369,20 +369,6 @@ h6 {
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
 }
 
-.btn-primary {
-  border-color: #388df8;
-  border-bottom-color: #0866dc;
-  background-color: #6eb4f7;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #6eb4f7), color-stop(100%, #1a82fb));
-  background-image: -webkit-linear-gradient(top, #6eb4f7 0%, #1a82fb 100%);
-  background-image: linear-gradient(to bottom, #6eb4f7 0%, #1a82fb 100%);
-}
-.btn-primary:active {
-  background-color: #3e9bf4;
-  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3e9bf4), color-stop(100%, #0469de));
-  background-image: -webkit-linear-gradient(top, #3e9bf4 0%, #0469de 100%);
-  background-image: linear-gradient(to bottom, #3e9bf4 0%, #0469de 100%);
-}
 
 .btn-positive {
   border-color: #29a03b;
