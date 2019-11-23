@@ -1,6 +1,6 @@
 <template src="./ClientesCrear.html"></template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop } from 'vue-property-decorator';
 import Tools from '@/backend/tools';
 import DB from '@/backend/db';
 
@@ -9,6 +9,7 @@ import DB from '@/backend/db';
 })
 export default class ClientesCrear extends Vue {
     private is_update: boolean = false;
+    @Prop() return_client!: boolean;
     private accion: string = 'Crear';
     private form: any = {
         rif: '',
@@ -25,6 +26,8 @@ export default class ClientesCrear extends Vue {
     private tools = new Tools();
     
     created() {
+        console.log(this.return_client);
+        
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
         if (this.$route.params.action === 'crear') {
             this.is_update = false;
@@ -52,8 +55,12 @@ export default class ClientesCrear extends Vue {
         }
         try {
             if (!this.is_update) {
-                await DB.insert('clientes', this.form).exec();
-                
+                const id = await DB.insert('clientes', this.form).exec();
+                if (this.return_client) {
+                    this.$emit('returnClient', id);
+                    return;
+                }
+
             } else {
                 await DB.update('clientes', this.form).where({rif: this.$route.params.id}).exec();
             }

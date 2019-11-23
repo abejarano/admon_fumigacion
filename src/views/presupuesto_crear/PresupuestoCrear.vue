@@ -2,11 +2,15 @@
 <script lang = "ts">
 import { Vue, Component, InjectReactive } from 'vue-property-decorator';
 import AddServiceTable from '@/components/AddServiceTable.vue';
+import ClientesCrear from '@/views/clientes_crear/ClientesCrear.vue';
 import DB from '@/backend/db';
 
 @Component({
     name: 'presupuesto',
-    components: { AddServiceTable }
+    components: {
+        AddServiceTable,
+        ClientesCrear,
+    }
 })
 export default class Presupuesto extends Vue {
     private is_update: boolean = false;
@@ -20,7 +24,8 @@ export default class Presupuesto extends Vue {
         sub_total: 0,
         total: 0,
         rif: '',
-        razon_social: ''
+        razon_social: '',
+        nro_presupuesto: ''
     };
 
     private async created() {
@@ -47,6 +52,7 @@ export default class Presupuesto extends Vue {
 
         const empresa = await DB.select('empresa').exec();
         this.form.porcentaje_iva = empresa.porcentaje_iva;
+        this.form.nro_presupuesto = empresa.correlativo_presupuesto;
         
     }
     
@@ -92,6 +98,20 @@ export default class Presupuesto extends Vue {
         }
 
         this.form.razon_social = data.razon_social;
+    }
+
+    private async receiveClient(client_id: any) {
+        this.$root.$emit('bv::hide::modal', 'modal-client');
+        if (client_id > 0) {
+            const data = await DB.select('clientes').where({
+                id: client_id
+            }).exec();
+            if (data.rowCount === 0) {
+                return;
+            }
+            this.form.razon_social = data.razon_social;
+            this.form.rif = data.rif;
+        }
     }
 }
 </script>

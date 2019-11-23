@@ -30,21 +30,20 @@
         <b-form @submit.prevent="onSubmit">
             <div class="float-right">
                 <b-form-group label = "Nro. Presupuesto" label-for="id_rif">
-                    <b-form-input type = "text"></b-form-input>
+                    <b-form-input type = "text" disabled v-model = "form.nro_presupuesto"></b-form-input>
                 </b-form-group>
-                    
             </div>
             <b-row>
                 <b-col cols = "3">
                     <b-form-group label = "RIF / C.I" label-for="id_rif">
-                        <b-form-input type = "text" v-on:keyup.enter = "setSearchClient($event.target.value)" autofocus :disabled="is_update" v-mask = "'A-#########'"></b-form-input>
+                        <b-form-input type = "text" v-model = "form.rif" v-on:keyup.enter = "setSearchClient($event.target.value)" autofocus :disabled="is_update" v-mask = "'A-#########'"></b-form-input>
                         <b-form-text id="password-help-block">
                             Luego de escribir el Rif del cliente presione ENTER.
                         </b-form-text>
                     </b-form-group>
                 </b-col>
                 <b-col cols = "1" class="mt-4 pt-2">
-                    <b-button  variant="success" size ="sm" v-on:click="openModelService">
+                    <b-button  variant="success" size ="sm" v-b-modal.modal-client>
                         <span class="icon icon-plus-circled" style="color: white;"></span>
                     </b-button>
                 </b-col>
@@ -102,6 +101,11 @@
             
         </div>
     </section>
+
+    <b-modal id="modal-client" title="BootstrapVue" size="lg">
+        <ClientesCrear :return_client="true" @returnClient="receiveClient"></ClientesCrear>
+    </b-modal>
+    
     <AddServiceTable @makeAddItem="setAddItem"></AddServiceTable>
 
 </section>
