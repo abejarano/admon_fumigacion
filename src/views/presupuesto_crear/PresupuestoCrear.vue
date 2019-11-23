@@ -4,6 +4,8 @@ import { Vue, Component, InjectReactive } from 'vue-property-decorator';
 import AddServiceTable from '@/components/AddServiceTable.vue';
 import ClientesCrear from '@/views/clientes_crear/ClientesCrear.vue';
 import DB from '@/backend/db';
+import Tools from '@/backend/tools';
+var moment = require('moment');
 
 @Component({
     name: 'presupuesto',
@@ -17,18 +19,21 @@ export default class Presupuesto extends Vue {
     private accion: string = 'Crear';
     private fields: any = [];
     private data: any = [];
-
+    private tools = new Tools();
+    private dias_presupuesto: number = 0;
     private form: any = {
-        iva: 0,
+        monto_iva: 0,
         porcentaje_iva: '',
-        sub_total: 0,
-        total: 0,
+        monto_base: 0,
+        monto_total: 0,
         rif: '',
+        cliente_id: '',
         razon_social: '',
         nro_presupuesto: ''
     };
 
     private async created() {
+        
         this.$store.commit('SET_LAYOUT',  'layout-dashboard');
         this.fields = [{
             label: '',
@@ -53,10 +58,7 @@ export default class Presupuesto extends Vue {
         const empresa = await DB.select('empresa').exec();
         this.form.porcentaje_iva = empresa.porcentaje_iva;
         this.form.nro_presupuesto = empresa.correlativo_presupuesto;
-        
-    }
-    
-    private async onSubmit(onAction: any) {
+        this.dias_presupuesto = empresa.dias_presupuesto;   
 
     }
 
@@ -64,7 +66,7 @@ export default class Presupuesto extends Vue {
         Object.keys(this.form).forEach( (key,index) => {
             this.form[key] = '';
         });
-        
+        this.data = [];
     }
 
     private openModelService() {
@@ -81,11 +83,11 @@ export default class Presupuesto extends Vue {
         for (const iterator of this.data) {
             subtotal += iterator.total;
         }
-        this.form.sub_total = (subtotal).toFixed(2);
+        this.form.monto_base = (subtotal).toFixed(2);
         const iva = (subtotal * this.form.porcentaje_iva).toFixed(2);
-        this.form.iva = iva;
+        this.form.monto_iva = iva;
 
-        this.form.total = (Number(iva) + subtotal).toFixed(2);
+        this.form.monto_total = (Number(iva) + subtotal).toFixed(2);
     }
 
     private async setSearchClient(rifClient: string) {
@@ -94,9 +96,10 @@ export default class Presupuesto extends Vue {
             rif: rifClient
         }).exec();
         if (data.rowCount === 0) {
+            this.$root.$emit('bv::show::modal', 'modal-client');
             return;
         }
-
+        this.form.cliente_id = data.id;
         this.form.razon_social = data.razon_social;
     }
 
@@ -111,7 +114,60 @@ export default class Presupuesto extends Vue {
             }
             this.form.razon_social = data.razon_social;
             this.form.rif = data.rif;
+            this.form.cliente_id = client_id;
         }
+    }
+
+    private async onSubmit(onAction: any) {
+        const resp = await this.tools.showMessageQuestion({
+            message: '¿Desea '+this.$route.params.action+' el servicio?',
+            detail: 'Se registrará una nuevo servicio en la base de datos'
+        });
+
+        if (resp === 2 || resp === 0) {
+            return;
+        }
+
+        try {
+            const data_presupuesto = {
+                fecha_expiracion: moment().add('days', this.dias_presupuesto).format('YYYY-MM-DD'),
+                monto_iva: this.form.monto_iva,
+                monto_base: this.form.monto_base,
+                monto_total: this.form.monto_total,
+                cliente_id: this.form.cliente_id,
+                porcentaje_iva: this.form.porcentaje_iva,
+            };
+            DB.conex.beginTransaction( () => {
+                (async () => {
+                    const id = await DB.insert('presupuestos', data_presupuesto).exec();
+            
+                    for (const iterator of this.data) {
+                        const detail = {
+                            monto_unitario: iterator.precio,
+                            cantidad: iterator.cantidad,
+                            total: iterator.total,
+                            servicio_id: iterator.codigo,
+                            presupuesto_id: id,
+                        }
+                        await DB.insert('presupuesto_detalles', detail).exec();
+                    }    
+                    DB.conex.commit( (err: any) =>{
+                        if (err) { 
+                            DB.conex.rollback( () => {
+                                throw err;
+                            });
+                        }
+                        this.resetForm();
+                    });
+                })();
+                
+            });
+            
+
+        } catch (e) {
+            alert(e.message);
+        }
+
     }
 }
 </script>

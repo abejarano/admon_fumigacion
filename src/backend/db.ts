@@ -1,7 +1,7 @@
 import mysql from 'mysql';
 
 class Conexion {
-    private conex: any;
+    public conex: any;
     private sqlWh: string = '';
     private sql: string = '';
     private inner: string = '';

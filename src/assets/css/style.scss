@@ -9,8 +9,12 @@ $azul: #212780;
 $color-blanco: #d0d0d0;
 
 html, body {
-font-size: 9pt;
-font-family: nexlig !important;
+    font-size: 9pt;
+    font-family: nexlig !important;
+    background: #f7f7f7 !important;
+}
+.pane {
+    background: #f7f7f7;
 }
 .form-title {
     font-family: nexbold;
