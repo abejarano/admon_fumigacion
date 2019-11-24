@@ -4,7 +4,16 @@
 import { Vue, Component } from 'vue-property-decorator';
 import GenericTable from '@/components/GenericTable.vue';
 import DB from '@/backend/db';
+const numeral = require('numeral');
+const moment = require('moment');
 
+Vue.filter("formatNumber", (value: any) => {
+    return numeral(value).format("0,000.00");
+});
+
+Vue.filter('formatDate', (value: any) => {
+    return moment(value).format('DD-MM-YYYY')
+})
 
 @Component({
     name: 'PresupuestoListado.vue',
@@ -19,7 +28,7 @@ export default class PresupuestoListado extends GenericTable {
             label: '',
             key: 'check'
         },{
-            label: 'Nro Presupuesto',
+            label: 'Nro.',
             key: 'id'
         },{
             label: 'Cliente',
@@ -42,7 +51,10 @@ export default class PresupuestoListado extends GenericTable {
         },{
             label: 'Estatus',
             key: 'estado'
-        },];
+        }, {
+            label: '',
+            key: 'button',
+        }];
 
         this.loadData(this.currentPage);
 
@@ -63,6 +75,10 @@ export default class PresupuestoListado extends GenericTable {
 
         this.loadTable = false;
         this.setData(this.data);
+
+    }
+
+    private printItem(presupueto_id: number) {
 
     }
 }

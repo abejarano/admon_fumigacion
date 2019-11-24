@@ -55,6 +55,11 @@ const routes = [
     name: 'presupuesto_crear',
     component: () => import('../views/presupuesto_crear/PresupuestoCrear.vue'),
   },
+    {
+        path: '/presupuestos/:action/:id',
+        name: 'presupuesto_editar',
+        component: () => import('../views/presupuesto_crear/PresupuestoCrear.vue'),
+    },
   {
     path: '/presupuestos',
     name: 'presupuesto_listado',

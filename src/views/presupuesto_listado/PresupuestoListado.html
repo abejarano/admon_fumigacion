@@ -57,6 +57,36 @@
                     <b-form-checkbox @change="selectAll"></b-form-checkbox>
                 </div>
             </template>
+            <template v-slot:cell(check) = "data">
+                <div class="text-center">
+                    <b-form-checkbox :value="data.item.id" v-model="check" @change="select(data.item.id)"></b-form-checkbox>
+                </div>
+            </template>
+            <template v-slot:cell(monto_base)="data">
+                {{ data.item.monto_base | formatNumber}}
+            </template>
+            <template v-slot:cell(monto_iva)="data">
+                {{ data.item.monto_iva | formatNumber}}
+            </template>
+            <template v-slot:cell(monto_total)="data">
+                {{ data.item.monto_total | formatNumber}}
+            </template>
+            <template v-slot:cell(fecha_creacion)="data">
+                {{ data.item.fecha_creacion | formatDate}}
+            </template>
+            <template v-slot:cell(fecha_expiracion)="data">
+                {{ data.item.fecha_expiracion | formatDate}}
+            </template>
+            <template v-slot:cell(button) = "data">
+                <div class="text-center">
+                    <router-link :to="'/presupuestos/actualizar/' + data.item.id" class="btn btn-success btn-sm mr-2">
+                        <span class="icon icon-pencil" style="color: white;"></span>
+                    </router-link>
+                    <b-button variant="primary" size="sm" class="mr-3" v-on:click="printItem(data.item.id)">
+                        <span class="icon icon-print" style="color: white;"></span>
+                    </b-button>
+                </div>
+            </template>
         </b-table>
     </section>
 
