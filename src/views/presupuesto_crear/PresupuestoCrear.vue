@@ -5,7 +5,7 @@ import AddServiceTable from '@/components/AddServiceTable.vue';
 import ClientesCrear from '@/views/clientes_crear/ClientesCrear.vue';
 import DB from '@/backend/db';
 import Tools from '@/backend/tools';
-var moment = require('moment');
+const moment = require('moment');
 
 @Component({
     name: 'presupuesto',
