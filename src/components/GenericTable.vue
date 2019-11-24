@@ -12,6 +12,7 @@ export default class GenericTable extends Vue {
     public totalRows: number = 1;
     public perPage: number = 14;
     public fields: any = [];
+    private filter: string = '';
 
     setData(data: any[]) {
         this.items = data;
@@ -43,6 +44,11 @@ export default class GenericTable extends Vue {
 
     getSelectedData() {
         return this.check;
+    }
+
+    onFiltered(filteredItems: any) {
+        this.totalRows = filteredItems.length;
+        this.currentPage = 1
     }
 }
 </script>
