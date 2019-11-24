@@ -8,6 +8,11 @@ export default class GenericTable extends Vue {
     private selectedAll: boolean = false;
     private items: any[] = [];
 
+    public currentPage: number = 1;
+    public totalRows: number = 1;
+    public perPage: number = 14;
+    public fields: any = [];
+
     setData(data: any[]) {
         this.items = data;
     }
