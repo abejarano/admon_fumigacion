@@ -12,13 +12,7 @@ import GenericTabble from '@/components/GenericTable.vue';
 })
 export default class ClientesListado extends GenericTabble {
     public data: any = [];
-    private fields: any = [];
-    private filter: string = '';
-    private loadTable: boolean = true;
-    private currentPage: number = 1;
-    private totalRows: number = 1;
-    private perPage: number = 14;   
-    private checkAll: boolean = false;
+    private loadTable: boolean = false;
     private tools = new Tools();
 
     public async created() {
