@@ -1,0 +1,35 @@
+<div>
+    <header class="toolbar toolbar-header">
+        <div class="toolbar-actions">
+            <div class="btn-group">
+                <router-link class="btn btn-default" to="/servicios/crear">
+                    <span class="icon icon-doc pr-4"></span>
+                    Nuevo
+                </router-link>
+                <button class="btn btn-default">
+                    <span class="icon icon-menu pr-4"></span>
+                    Listado
+                </button>
+            </div>
+        </div>
+    </header>
+    <h3 class="form-title">Listado de presupuestos emitidos</h3>
+
+    <section class="form-custom">
+        <b-table head-variant="dark" hover :busy="loadTable" :items="data" :fields="fields" :filter="filter" @filtered="onFiltered">
+            <template v-slot:table-busy>
+                <div class="text-center text-danger my-2">
+                    <b-spinner class="align-middle"></b-spinner>
+                    <br>
+                    <strong>Cargando datos ...</strong>
+                </div>
+            </template>
+            <template v-slot:head(check)="data">
+                <div class="text-center">
+                    <b-form-checkbox @change="selectAll"></b-form-checkbox>
+                </div>
+            </template>
+        </b-table>
+    </section>
+
+</div>
