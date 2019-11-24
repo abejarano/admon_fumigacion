@@ -1,9 +1,9 @@
 <template src = './ServicioListado.html'></template>
 
 <script lang = "ts">
-import { Vue, Component, Prop } from 'vue-property-decorator';
+import { Vue, Component } from 'vue-property-decorator';
 import DB from '@/backend/db';
-import GenericTabble from '@/components/GenericTable.vue';
+import GenericTable from '@/components/GenericTable.vue';
 import Tools from '@/backend/tools';
 
 const numeral = require('numeral');
@@ -15,14 +15,10 @@ Vue.filter("formatNumber", (value: any) => {
 @Component({
     name: 'ServicioListado',
 })
-export default class ServicioListado extends GenericTabble {
+export default class ServicioListado extends GenericTable {
     public data: any = [];
-    private fields: any = [];
-    private filter: string = '';
     private loadTable: boolean = true;
-    private currentPage: number = 1;
-    private totalRows: number = 1;
-    private perPage: number = 14;   
+
     private checkAll: boolean = false;
     private tools = new Tools();
     
@@ -71,11 +67,6 @@ export default class ServicioListado extends GenericTabble {
         
     }
 
-    onFiltered(filteredItems: any) {
-        // Trigger pagination to update the number of buttons/pages due to filtering
-        this.totalRows = filteredItems.length
-        this.currentPage = 1
-    }
     private async deleteItem(id: any) {
         
         const resp = await this.tools.showMessageQuestion({

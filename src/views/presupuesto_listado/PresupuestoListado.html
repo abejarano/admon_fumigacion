@@ -2,7 +2,7 @@
     <header class="toolbar toolbar-header">
         <div class="toolbar-actions">
             <div class="btn-group">
-                <router-link class="btn btn-default" to="/servicios/crear">
+                <router-link class="btn btn-default" to="/presupuestos/crear">
                     <span class="icon icon-doc pr-4"></span>
                     Nuevo
                 </router-link>
@@ -16,6 +16,34 @@
     <h3 class="form-title">Listado de presupuestos emitidos</h3>
 
     <section class="form-custom">
+            <div class="overflow-auto">
+                    <b-row>
+                        <b-col cols="3">
+                            <b-input-group size="sm">
+                                <b-form-input
+                                    v-model="filter"
+                                    type="search"
+                                    placeholder="Buscar..."
+                                >
+                            </b-form-input>
+                            <b-input-group-append>
+                                <b-button :disabled="!filter" @click="filter = ''">Clear</b-button>
+                            </b-input-group-append>
+                            </b-input-group>
+                        </b-col>
+                        <b-col cols = "7">
+                            <b-pagination align="center" @input="loadData(currentPage)"
+                                v-model="currentPage"
+                                :total-rows="totalRows"
+                                :per-page="perPage"
+                            ></b-pagination>
+                        </b-col>
+                        <b-col cols = "2">
+                            Total registros: {{ totalRows }}
+                        </b-col>
+                    </b-row>
+        
+                </div>
         <b-table head-variant="dark" hover :busy="loadTable" :items="data" :fields="fields" :filter="filter" @filtered="onFiltered">
             <template v-slot:table-busy>
                 <div class="text-center text-danger my-2">

@@ -1,17 +1,18 @@
 import mysql from 'mysql';
+import Joins from '@/backend/joins';
 
-class Conexion {
+
+class Conexion extends Joins {
     public conex: any;
     private sqlWh: string = '';
     private sql: string = '';
-    private inner: string = '';
+
     private whereValue: any[] = [];
     private typeSQL: string = 'SELECT';
-    private table: string = '';
-
 
     public constructor() {
-        // this.conex = new Pool(postgresql);
+        super();
+
         const db = mysql.createConnection ({
             host: '127.0.0.1',
             user: 'root',
@@ -58,6 +59,11 @@ class Conexion {
         return this;
     }
 
+    /**
+     * Crear un SELECT
+     * @param table nombre de la tabla que se consultara
+     * @param fields listado de campos que retornara el SQL. Los campos deben ser separados por coma (,)
+     */
     public select(table: string, fields: any = '') {
         this.sql = '';
         this.table = table;
@@ -113,17 +119,18 @@ class Conexion {
     }
     public async exec(): Promise <any> {
         const query = this.sql + this.inner + this.sqlWh;
+        this.clearVar();
         let condition: any = [];
         if ( Object.keys(this.whereValue).length > 0 ) {
             condition = this.whereValue;
         }
         return new Promise( ( resolve, reject ) => {
             if (this.typeSQL === 'SELECT') {
+                // console.log(query);
                 this.conex.query(query, condition, (error: any, results: any, fields: any) => {
                     if (error) {
                         reject(error);
                     }
-                    this.clearVar();
 
                     if (results.length === 0) {
                         resolve({
@@ -163,6 +170,7 @@ class Conexion {
         this.table = table;
         this.sql = 'DELETE FROM ' + table;
         this.typeSQL = 'DELETE';
+        this.inner = '';
         return this;
     }
 
@@ -175,6 +183,8 @@ class Conexion {
         const totalPages = Math.ceil(totalRows / perPage);
 
         const SQL = this.sql + this.inner + this.sqlWh + ' LIMIT ' + offset + ',' + perPage;
+        // console.log(SQL);
+        this.clearVar();
         const data = await this.raw(SQL);
 
         return {
@@ -184,7 +194,7 @@ class Conexion {
         };
     }
 
-    private clearVar() {
+    protected clearVar() {
         this.sql = '';
         this.sqlWh = '';
         this.typeSQL = 'SELECT';
@@ -195,5 +205,6 @@ class Conexion {
         this.whereValue = [];
     }
 }
-
-export default  new Conexion();
+const obj = new Conexion();
+obj.clearVar();
+export default  obj;

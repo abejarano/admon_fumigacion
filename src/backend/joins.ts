@@ -9,7 +9,7 @@ export default class Joins {
      * @param fieldTable
      */
     public Inner(foreignTable: string, fieldTableJoin: string, fieldTable: string) {
-        this.inner += ' INNER JOIN ' + foreignTable + ' ON ' + foreignTable + '.' + fieldTableJoin + '=' + fieldTable;
+        this.inner = ' INNER JOIN ' + foreignTable + ' ON ' + foreignTable + '.' + fieldTableJoin + '=' + fieldTable;
         return this;
     }
 }

@@ -27,7 +27,7 @@
                 <span class="icon icon-user"></span>
                 Clientes
             </router-link>
-            <router-link class="nav-group-item" to="/presupuestos/crear">
+            <router-link class="nav-group-item" to="/presupuestos">
                 <span class="icon icon-keyboard"></span>
                 Presupuestos
             </router-link>
