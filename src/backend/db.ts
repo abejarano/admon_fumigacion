@@ -119,15 +119,16 @@ class Conexion extends Joins {
     }
     public async exec(): Promise <any> {
         const query = this.sql + this.inner + this.sqlWh;
-        this.clearVar();
         let condition: any = [];
         if ( Object.keys(this.whereValue).length > 0 ) {
             condition = this.whereValue;
         }
+
         return new Promise( ( resolve, reject ) => {
             if (this.typeSQL === 'SELECT') {
-                // console.log(query);
+
                 this.conex.query(query, condition, (error: any, results: any, fields: any) => {
+                    this.clearVar();
                     if (error) {
                         reject(error);
                     }
@@ -146,16 +147,16 @@ class Conexion extends Joins {
             }
             if (this.typeSQL === 'INSERT' || this.typeSQL === 'UPDATE' || this.typeSQL === 'DELETE') {
                 this.conex.query(query, condition, (error: any, results: any) => {
+                    this.clearVar();
                     if (error) {
                         reject(error);
                         return;
                     }
 
                     if (this.typeSQL === 'INSERT') {
-                        this.clearVar();
                         resolve(results.insertId);
+
                     } else if (this.typeSQL === 'UPDATE' || this.typeSQL === 'DELETE') {
-                        this.clearVar();
                         resolve(results.affectedRows);
                     }
 
