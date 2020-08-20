@@ -13,7 +13,7 @@
   },
   "main": "background.js",
   "dependencies": {
-    "bcrypt": "^3.0.6",
+    "bcrypt": "^5.0.0",
     "bootstrap": "^4.3.1",
     "bootstrap-vue": "^2.0.4",
     "core-js": "^3.3.2",
